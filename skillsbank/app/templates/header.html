@@ -1,0 +1,41 @@
+<header class="header">
+    <a href="{% url 'index' %}">
+        <div class="logo-xl bold" id="top-logo"><span class="red-text font-bold">Skills</span>Bank</div>
+    </a>
+
+ 
+        
+    <nav>
+        <ul class="nav blue-text-nav">
+            {% if user.is_authenticated %}
+            <li tabindex="1">
+                <strong><a href="{% url 'add_skill' %}" class="hub-nav">Add Skill</a></strong>
+            </li>
+            <li tabindex="1">
+                <strong><a href="{% url 'user_skills' %}" class="workspace-nav">Skills List</a></strong>
+            </li>
+            <li tabindex="1">
+                <strong><a href="{% url 'home' %}" class="workspace-nav">Home</a></strong>
+            </li>
+            <li tabindex="2">
+                <strong class="blue-text-nav"><a href="{% url 'index' %}" class="layout-nav">Skills Bank</a></strong>
+            </li>
+
+            <li tabindex="3" >
+                You're logged in as <a href="{% url 'home' %}" class="user" ><strong>{{ user.username }}</strong></a>
+            </li>
+            <li tabindex="4">
+                <a href="{% url 'logout' %}" class="">Logout</a>
+            </li>
+            {% else %}
+            <li tabindex="1">
+                <a href="{% url 'login' %}" class="">Login</a>
+            </li>
+            <li tabindex="2">
+                <a href="{% url 'register' %}" class="">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    
+</header>
