@@ -294,7 +294,7 @@ nav a {
     margin-top: 0.5rem;
 }
 
-.enjoyment-options, .proficiency-options, .experience-options   {
+.enjoyment-options, .proficiency-options, .experience-options  {
     display: flex;
     flex-direction: row;
 }
@@ -312,7 +312,7 @@ nav a {
     margin: 0 0.1rem;
 }
 
-.category-options label, .context-options label, .enjoyment-options label, .proficiency-options label, .experience-options label  {
+.category-options label, .context-options label, .enjoyment-options label, .proficiency-options label, .experience-options label {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -333,14 +333,14 @@ nav a {
     background-color: var(--highlight-color, #e0e0e0);
   }
   
-  .category-options label.selected, .context-options label.selected, .enjoyment-options label.selected, .proficiency-options label.selected, .experience-options label.selected  {
+  .category-options label.selected,  .context-options label.selected, .enjoyment-options label.selected, .proficiency-options label.selected, .experience-options label.selected {
     background-color: var(--highlight-color);
     color: white;
     box-shadow: 0 0 8px rgba(128, 77, 0, 0.4);
 
   }
   
-  .category-options input[type="checkbox"], .context-options input[type="checkbox"]  {
+  .category-options input[type="checkbox"], .context-options input[type="checkbox"] {
     display: none;
   }
 
@@ -364,9 +364,16 @@ nav a {
     background-color: cornflowerblue;
   }
 
+
+
 .login-heading {
     font-size: 3rem;
 }
+
+
+
+
+
 
 .auth-link {
 	font-weight: bold;

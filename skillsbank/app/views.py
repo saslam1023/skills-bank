@@ -220,6 +220,8 @@ def add_skill(request):
     return render(request, "add-skill.html", {"form": form})
 """
 
+
+""" Works"""
 def add_skill(request):
     if request.method == 'POST':
         form = SkillForm(request.POST)

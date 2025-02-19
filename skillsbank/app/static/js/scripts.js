@@ -163,30 +163,48 @@ const apiUrl = "http://localhost:3001/skills";
 
       */
 
-document.addEventListener('DOMContentLoaded', function () {
-  const categoryLabels = document.querySelectorAll('.category-options label');
-
-  categoryLabels.forEach(label => {
-    label.addEventListener('click', () => {
-      const checkbox = document.getElementById(label.getAttribute('for'));
-      checkbox.checked = !checkbox.checked;
-      label.classList.toggle('selected');
-    });
-  });
-});
+      document.addEventListener('DOMContentLoaded', function () {
+        const categoryLabels = document.querySelectorAll('.category-options label');
+        const contextLabels = document.querySelectorAll('.context-options label');
       
+        // Function to toggle selected class based on checkbox state
+        const toggleSelectedClass = (checkbox, label) => {
+          if (checkbox.checked) {
+            label.classList.add('selected');
+          } else {
+            label.classList.remove('selected');
+          }
+        };
       
-document.addEventListener('DOMContentLoaded', function () {
-  const contextLabels = document.querySelectorAll('.context-options label');
-
-  contextLabels.forEach(label => {
-    label.addEventListener('click', () => {
-      const checkbox = document.getElementById(label.getAttribute('for'));
-      checkbox.checked = !checkbox.checked;
-      label.classList.toggle('selected');
-    });
-  });
-});
+        // Handle clicks for category labels
+        categoryLabels.forEach(label => {
+          const checkbox = document.getElementById(label.getAttribute('for'));
+          
+          // Toggle checkbox checked state and label class on click
+          label.addEventListener('click', () => {
+            checkbox.checked = !checkbox.checked;
+            toggleSelectedClass(checkbox, label);  // Update the class based on checkbox state
+          });
+          
+          // Ensure the correct selected class when page is loaded
+          toggleSelectedClass(checkbox, label);
+        });
+      
+        // Handle clicks for context labels
+        contextLabels.forEach(label => {
+          const checkbox = document.getElementById(label.getAttribute('for'));
+          
+          // Toggle checkbox checked state and label class on click
+          label.addEventListener('click', () => {
+            checkbox.checked = !checkbox.checked;
+            toggleSelectedClass(checkbox, label);  // Update the class based on checkbox state
+          });
+          
+          // Ensure the correct selected class when page is loaded
+          toggleSelectedClass(checkbox, label);
+        });
+      });
+      
 
 document.addEventListener('DOMContentLoaded', function () {
   const enjoyLabels = document.querySelectorAll('.enjoyment-options label');

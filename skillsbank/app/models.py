@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Skill
 class Skill(models.Model):    
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='skills')
@@ -34,6 +35,8 @@ class Skill(models.Model):
         return self.name
 
 
+
+
 # Skill: Context
 class Context(models.Model):
     name = models.CharField(max_length=100)
@@ -47,6 +50,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
 
 # 2. Project Model
 class Project(models.Model):

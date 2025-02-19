@@ -62,5 +62,13 @@ class SkillForm(forms.ModelForm):
     enjoyment = forms.ChoiceField(choices=Skill._meta.get_field('enjoyment').choices)
     
     # Checkbox fields for context and category
-    context = forms.ModelMultipleChoiceField(queryset=Context.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
-    category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
+    context = forms.ModelMultipleChoiceField(
+        queryset=Context.objects.all(), 
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "context-options"}), 
+        required=False)
+
+    category = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(), 
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "category-options"}),  
+        required=False)
+
