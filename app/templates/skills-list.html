@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="scrollable-area">
+
+  <div class="max-w-md w-full skill-form">
+<h1>Your Skills</h1> 
+
+{% for skill in skills %}
+<h2>{{ skill.name }}</h2> 
+<ul>
+ 
+    <li>Proficiency: {{ skill.proficiency }}%</li>
+    <li>Experience: {{ skill.experience }}%</li>
+    <li>Enjoyment: {{ skill.enjoyment }}%</li>
+    <li>Category: {{ skill.category }}%</li>
+    <li>Context: {{ skill.context }}%</li>
+</ul>
+<hr>
+{% endfor %}
+</div>
+</div>
+{% endblock %}

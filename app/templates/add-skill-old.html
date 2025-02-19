@@ -1,0 +1,164 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="scrollable-area">
+
+  <div class="max-w-md w-full login-form">
+    <h1 class="login-heading">Skills Bank</h1>
+
+    <h2 class="text-center mt-2">Access a Wealth of Expertise – Search My Skills Bank</h2>
+    <p class="text-center">Quickly find the expertise you need for your project. From technical skills to creative solutions, I’ve made it easy to discover the right abilities for your project.</p>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+    
+
+    <div class="skill-form">
+      <h1>Add a New Skill</h1>
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+      <form method="post">
+        {% csrf_token %}
+      
+        <div class="form-group">
+          <label for="{{ form.name.id_for_label }}" class="text-2xl font-medium text-gray-700">Skill Name</label>
+          {{ form.name }}
+          {% if form.name.errors %}
+            <ul class="errors text-red-600">
+              {% for error in form.name.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      
+        <div class="form-group">
+          <label for="proficiency" class="block text-2xl font-medium text-gray-700">Proficiency</label>
+          <select id="proficiency" name="proficiency" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="" disabled selected>Select proficiency level</option>
+            <option value="1">Novice: New to this skill, limited experience</option>
+            <option value="2">Beginner: Basic understanding, can follow instructions for simple tasks</option>
+            <option value="3">Intermediate: Good grasp of the skill, can handle most tasks with some guidance</option>
+            <option value="4">Advanced: Confident in handling complex tasks independently</option>
+            <option value="5">Expert: Mastery of the skill, can teach and mentor others</option>
+            <option value="6">Master: Thought leader, frequently creating new approaches and teaching others at a high level</option>
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <label for="experience" class="block text-2xl font-medium text-gray-700">Experience</label>
+          <select id="experience" name="experience" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="" disabled selected>Select experience level</option>
+            <option value="1">Limited Experience: Used occasionally in simple contexts</option>
+            <option value="2">Basic Experience: Used in a few instances, moderate comfort</option>
+            <option value="3">Moderate Experience: Used regularly with confidence</option>
+            <option value="4">Extensive Experience: Significant experience with complex tasks</option>
+            <option value="5">Comprehensive Experience: Mastered in diverse, challenging scenarios</option>
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <label for="enjoyment" class="block text-2xl font-medium text-gray-700">Enjoyment Level</label>
+          <select id="enjoyment" name="enjoyment" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="" disabled selected>Select your enjoyment level</option>
+            <option value="1">Dislike: I don’t enjoy this skill at all</option>
+            <option value="2">Neutral: I neither like nor dislike this skill</option>
+            <option value="3">Moderate Enjoyment: I enjoy this skill occasionally</option>
+            <option value="4">Strong Enjoyment: I enjoy this skill regularly</option>
+            <option value="5">Passionate: I absolutely love this skill</option>
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <label for="context" class="block text-2xl font-medium text-gray-700">Context of Use (optional)</label>
+          <select id="context" name="context" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="" disabled selected>Select context</option>
+            <option value="1">Personal Projects</option>
+            <option value="2">Professional Work</option>
+            <option value="3">Educational (Courses, Certifications)</option>
+            <option value="4">Volunteer/Freelance</option>
+            <option value="5">Research (Academic/Scientific)</option>
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <label for="certification" class="block text-2xl font-medium text-gray-700">Certifications or Qualifications (optional)</label>
+          <input type="text" id="certification" name="certification" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="Certification Name, Issuing Organization, Date Earned"/>
+        </div>
+      
+        <div class="form-group">
+          <label for="category" class="block text-2xl font-medium text-gray-700">Category or Tags (optional)</label>
+          <div class="category-options">
+              <label data-category="1" for="category1">💻 Programming</label>
+              <input type="checkbox" id="category1" name="category" value="1" hidden>
+        
+              <label data-category="2" for="category2">📊 Data Science & AI</label>
+              <input type="checkbox" id="category2" name="category" value="2" hidden>
+        
+              <label data-category="3" for="category3">🌐 Web Development</label>
+              <input type="checkbox" id="category3" name="category" value="3" hidden>
+        
+              <hr>
+        
+              <label data-category="4" for="category4">☁️ Cloud & DevOps</label>
+              <input type="checkbox" id="category4" name="category" value="4" hidden>
+        
+              <label data-category="5" for="category5">🤖 Artificial Intelligence</label>
+              <input type="checkbox" id="category5" name="category" value="5" hidden>
+        
+              <label data-category="6" for="category6">🎨 Design & Creative Skills</label>
+              <input type="checkbox" id="category6" name="category" value="6" hidden>
+        
+              <label data-category="7" for="category7">📈 Business & Project Management</label>
+              <input type="checkbox" id="category7" name="category" value="7" hidden>
+        
+              <label data-category="8" for="category8">📣 Marketing & SEO</label>
+              <input type="checkbox" id="category8" name="category" value="8" hidden>
+        
+              <label data-category="9" for="category9">💬 Communication & Soft Skills</label>
+              <input type="checkbox" id="category9" name="category" value="9" hidden>
+        
+              <label data-category="10" for="category10">🧮 Business Analysis</label>
+              <input type="checkbox" id="category10" name="category" value="10" hidden>
+        
+              <label data-category="11" for="category11">💼 Sales & Customer Service</label>
+              <input type="checkbox" id="category11" name="category" value="11" hidden>
+        
+              <label data-category="12" for="category12">🧑‍💼 Human Resources (HR)</label>
+              <input type="checkbox" id="category12" name="category" value="12" hidden>
+        
+              <label data-category="13" for="category13">💰 Finance & Accounting</label>
+              <input type="checkbox" id="category13" name="category" value="13" hidden>
+        
+              <label data-category="14" for="category14">📚 Education & Training</label>
+              <input type="checkbox" id="category14" name="category" value="14" hidden>
+          </div>
+        </div>
+        
+      
+      
+      
+      
+        <button type="submit" class="w-full button primary">Save Skill</button>
+      </form>
+  </div>
+  
+
+  </div>
+  </div>
+  
+  
+
+    
+  
+  {% endblock %}
