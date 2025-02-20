@@ -28,37 +28,7 @@
         {% endif %}
         
 
-<hr><!--
-<form method="POST">
-  {% csrf_token %}
-  
-  <label>Name:</label>
-  {{ form.name }}
-
-  <label>Proficiency:</label>
-  {{ form.proficiency }}
-
-  <label>Experience:</label>
-  {{ form.experience }}
-
-  <label>Enjoyment:</label>
-  {{ form.enjoyment }}
-
-  <label>Certification:</label>
-  {{ form.certification }}
-
-  <label>Context:</label>
-  {{ form.context }}  <!- Should generate multiple checkboxes ->
-
-  <label>Category:</label>
-  {{ form.category }}  <!- Should generate multiple checkboxes ->
-
-  <button type="submit">Add Skill</button>
-</form>
--->
-
 <hr>
-
 
         <!-- Add Skill Form -->
 <form method="POST" enctype="multipart/form-data">
@@ -187,19 +157,16 @@
               </div>
           </div>
           
-
+          <div class="form-group">
+            <label for="category" class="block skill-form-heading">Category</label>
+          {{ form.category }}  
+          </div>
 
           <div class="form-group">
             <label for="context" class="block skill-form-heading">Context of Use (optional)</label>
           {{ form.context }}  
           </div>
 
-          <div class="form-group">
-            <label for="context" class="block skill-form-heading">Category</label>
-          {{ form.category }}  
-          </div>
-          
-          
             <div class="form-group">
               <label for="certification" class="block skill-form-heading">Certifications or Qualifications (optional)</label>
               <input type="text" id="certification" name="certification" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="Certification Name, Issuing Organisation, Date Earned"/>

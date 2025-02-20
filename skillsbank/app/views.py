@@ -49,6 +49,29 @@ def add_skill(request):
     return render(request, 'add-skill.html')
 
 
+def skill_detail(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id)
+    return render(request, 'skill_detail.html', {'skill': skill})
+
+
+def skills_dashboard(request):
+    skills = Skill.objects.all()
+
+    skills_by_category = {}
+
+    for skill in skills:
+        for category in skill.category.all():  
+            if category.name not in skills_by_category:
+                skills_by_category[category.name] = []
+            skills_by_category[category.name].append(skill)
+
+    print("Skills grouped by category:",{'skills_by_category': skills_by_category})
+
+
+    return render(request, 'skills-dashboard.html', {'skills_by_category': skills_by_category})
+
+
+
 """ Authentication (Public)"""
 # Authentication System
 

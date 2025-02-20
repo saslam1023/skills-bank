@@ -253,3 +253,39 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+
+
+function openSkill(skillId) {
+  document.getElementById(`skill-detail-${skillId}`).classList.add("active");
+}
+function closeSkill(skillId) {
+  document.getElementById(`skill-detail-${skillId}`).classList.remove("active");
+}
+
+
+
+
+const leftDiv = document.querySelector('.left-div');
+const rightDiv = document.querySelector('.right-div');
+
+// Get all the links inside the left div
+const leftLinks = document.querySelectorAll('.left-div a');
+
+// Get the right link
+const linkRight = document.getElementById('link-right');
+
+// When clicking the right link, adjust the divs
+linkRight.addEventListener('click', () => {
+  leftDiv.style.width = '99%';
+  rightDiv.style.width = '1%';
+});
+
+// When clicking any of the left links, reset the divs
+leftLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    leftDiv.style.width = '25%';
+    rightDiv.style.width = '75%';
+  });
+});

@@ -22,6 +22,9 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
     path('add-skill/', views.add_skill, name='add_skill'),
     path('skills/', views.user_skills, name='user_skills'),
+    path('skills-dashboard/', views.skills_dashboard, name='skills_dashboard'), 
+    path('skills/<int:skill_id>/', views.skill_detail, name='skill_detail'),
+
 
     path('terms-of-use/', views.terms, name='terms'),
     path('privacy-policy/', views.privacy, name='privacy'),

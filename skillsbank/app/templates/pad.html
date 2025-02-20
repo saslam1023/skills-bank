@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="scrollable-area">
+
+    <div class="yellow">
+          <h1 class="category-heading">Skills Dashboard</h1>
+          
+          <!-- Success Messages -->
+          {% if messages %}
+          <div class=auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+              {% for message in messages %}
+              <p>{{ message }}</p>
+              {% endfor %}
+          </div>
+          {% endif %}
+          
+          <!-- Form Errors -->
+          {% if form.errors %}
+          <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+              <p><strong>Please correct the following errors</strong></p>
+              <ul>
+                  {% for field, errors in form.errors.items %}
+                      <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+                  {% endfor %}
+              </ul>
+          </div>
+          {% endif %}
+          
+  
+xxxxxxxxxxxxxxxxx
+    {% for category, skills in skills_by_category.items %}
+        <div class="skill-categories">
+            <h2>{{ category }}</h2>
+        </div>
+            <div class="skills-grid">
+                {% for skill in skills %}
+                    <div class="skill-card" onclick="openSkill('{{ skill.id }}')">
+                        <h3>{{ skill.name }}</h3>
+                        
+                    </div>
+
+                    <!-- Hidden Detailed Info Box -->
+                    <div id="skill-detail-{{ skill.id }}" class="skill-detail hidden">
+                        <button class="close-btn" onclick="closeSkill('{{ skill.id }}')">&times;</button>
+                        <h2>{{ skill.name }}</h2>
+                        <p><strong>Proficiency:</strong> {{ skill.proficiency }}</p>
+                        <p><strong>Experience:</strong> {{ skill.experience }}</p>
+                        <p><strong>Enjoyment:</strong> {{ skill.enjoyment }}</p>
+                        <p><strong>Certification:</strong> {{ skill.certification }}</p>
+                        <p><strong>Context:</strong> {{ skill.context }}</p>
+                        <p><strong>Categories:</strong> 
+                            {% for category in skill.category.all %}
+                                {{ category.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <a href="{% url 'skill_detail' skill.id %}" class="detail-link">View Full Details</a>
+                    </div>
+                
+                {% endfor %}
+                
+            </div>
+        </div>
+    {% endfor %}
+
+    THERE
+</div>
+
+{% endblock %}

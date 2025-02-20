@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="skill-detail-page">
+    <h1>{{ skill.name }}</h1>
+    <p><strong>Proficiency:</strong> {{ skill.get_proficiency_display }}</p>
+    <p><strong>Experience:</strong> {{ skill.get_experience_display }}</p>
+    <p><strong>Enjoyment:</strong> {{ skill.get_enjoyment_display }}</p>
+    <p><strong>Certification:</strong> {{ skill.certification }}</p>
+    <p><strong>Context:</strong> {{ skill.context }}</p>
+    <p><strong>Category:</strong> {{ skill.category }}</p>
+    <a href="{% url 'skills_dashboard' %}">Back to Dashboard</a>
+</div>
+{% endblock %}
