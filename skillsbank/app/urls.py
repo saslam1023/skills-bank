@@ -10,6 +10,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('search-skills/', views.search_users_by_skill, name='search_users_by_skill'),
+
     path('home/', views.home, name='home'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
@@ -24,7 +26,9 @@ urlpatterns = [
     path('skills/', views.user_skills, name='user_skills'),
     path('skills-dashboard/', views.skills_dashboard, name='skills_dashboard'), 
     path('skills/<int:skill_id>/', views.skill_detail, name='skill_detail'),
-
+    path('profile/<str:username>/', views.user_profile, name='user_profile'),
+    path('profile2/<str:username>/', views.update_user_profile, name='update_user_profile'),
+    path('<str:username>/', views.public_user_profile, name='public_user_profile'),
 
     path('terms-of-use/', views.terms, name='terms'),
     path('privacy-policy/', views.privacy, name='privacy'),

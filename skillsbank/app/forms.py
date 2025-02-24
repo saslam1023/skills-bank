@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordResetDoneView
-from .models import Skill, Category, Context, Category
+from .models import Skill, Category, Context, Category, Profile
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -21,6 +21,12 @@ class CustomUserCreationForm(UserCreationForm):
             raise forms.ValidationError("A user with that email already exists.")
         return email
 
+    def save(self, commit=True):
+            user = super().save(commit=False)
+            if commit:
+                user.save()
+                Profile.objects.create(user=user)  
+            return user
 
 
 class CustomPasswordResetView(PasswordResetView):

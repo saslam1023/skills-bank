@@ -241,14 +241,29 @@ nav a {
 .skill-form  {
 	text-align: left;
 	min-width: 300px;
-    width:800px;
-    max-width: 800px;
+    width:fit-content;
+    max-width: 90%;
 	padding: 0.5rem;
 	font-size: 1rem;
 	outline: 0;
     margin: auto;
     color: var(--neutral-light);
+    gap:0;
 }
+
+.full-form  {
+	text-align: left;
+	min-width: 300px;
+    width:fit-content;
+    max-width: 90%;
+	padding: 0.5rem;
+	font-size: 1rem;
+	outline: 0;
+    margin: auto;
+    color: var(--neutral-light);
+    gap:0;
+}
+
 
 .category-form  {
 	text-align: left;
@@ -258,19 +273,65 @@ nav a {
 	padding: 0.5rem;
 	font-size: 1rem;
 	outline: 0;
-    margin: auto;
+    margin: auto auto 3rem auto;
     color: var(--neutral-light);
 }
 
+ol {
+    list-style-type: decimal; /* Default number */
+    margin-left: 2rem;
+    background-color: var(--button-primary-bg);
+
+}
 
 
-.yellow { 
-    background-color: yellow;
+/* custom styles for ordered list */
+.ol {
+    list-style-type: decimal;  /* Ensures it's a numbered list */
+    padding-left: 3rem; 
+    padding-top: 1rem;  
+    padding-bottom: 1rem;     /* Adjust left padding for the numbers */
+}
+
+.ol li {
+    font-size: 1rem;         /* Adjust the font size of the list items */
+    line-height: 1.5;        /* Set line height for better readability */
+    margin-bottom: 10px;     /* Adds some space between items */
+padding-left: 0.5rem;
+}
+
+.ol li::marker {
+    font-weight: bold;       /* Make numbers bold */
+    color: #f1c40f;          /* Customize number color */
+    margin-right: 0px;      /* Space between the number and the text */
+}
+
+
+.skills-top-tens { 
 display: flex;
 flex-wrap: wrap;
 flex-direction: row;
+gap:0;
+justify-content: center;
+margin-bottom: 4rem;
 }
 
+.bio {
+    display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+gap:3rem;
+justify-content: start;
+margin: 4rem 0 1rem 0;
+}
+
+.top-10 {
+
+color: var(--neutral-light);
+border-radius: 0.5rem;
+padding: 0.5rem;
+width:250px;
+}
 
 .category-options, .context-options {
     display: flex;
@@ -312,7 +373,7 @@ flex-direction: row;
   }
 */
 .explain {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     text-align: center;
     margin-top: 0.5rem;
 }
@@ -320,19 +381,20 @@ flex-direction: row;
 .enjoyment-options, .proficiency-options, .experience-options  {
     display: flex;
     flex-direction: row;
+    gap: 0.5rem;
 }
 
 .enjoyment-item label, .proficiency-item label, .experience-item label {
-    width: 150px;
+    width:100%;
     padding: 0;
-    text-align: center;
-
 }
 .enjoyment-item, .proficiency-item, .experience-item  {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0 0.1rem;
+    justify-self: center;
+    width: 200px;
 }
 
 .category-options label, 
@@ -359,6 +421,9 @@ flex-direction: row;
   .skill-categories {
     font-size: 1.5rem;
     margin: 2rem 0 1rem 0;
+    background-color: var(--highlight-color);
+    padding:1rem;
+    color: var(--neutral-dark);
   }
   
   .category-options label:hover, 
@@ -501,11 +566,29 @@ input:focus, textarea:focus {
 .form-group {
     margin-top: 1.5rem;
     color: var(--neutral-light);
+
 }
+
+
 
 .skill-form-heading {
     font-size: 2rem;
+    color: var(--highlight-color);
+    margin-top: 1rem;
 }
+
+.skill-form-subheading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: var(--neutral-light);
+    color: var(--button-primary-bg);
+    margin: 1rem 0 0 0;
+    padding: 1rem 0.5rem;
+    text-align: center;
+}
+
+.center { text-align: center;}
+
 
 /* Alerts */
 .alert {
@@ -540,12 +623,25 @@ label, .label {
 }
 
 
-#searchInput, #username, #password, #email, #password1, #password2, #id_new_password1, #id_new_password2, .input-field, .form-group input, .input-field {
+#searchInput,
+ #username, 
+ #password, 
+ #email, 
+ #password1, 
+ #password2, 
+ #id_new_password1, 
+ #id_new_password2, 
+ .input-field, 
+ .form-group input, 
+ .input-field
+ {
     background-color: var(--neutral-light);
-   color: var(--neutral-dark); 
+    color: var(--neutral-dark); 
     border-radius: 0;
     border-bottom: 3px solid red;
 }
+
+
 
 
 
@@ -634,20 +730,99 @@ label, .label {
 .skills-grid {
     display: grid;
    /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));*/
-   grid-template-columns: repeat(6, 1fr); 
-    gap: 10px;
+   grid-template-columns: repeat(3, 1fr); 
+    gap: 1rem;
+    margin-top: 1rem;
 }
-.skill-card {
+
+.stat {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--neutral-light);
+    color: var(--neutral-dark);
+    font-size: 1rem;
+
+}
+
+.stat-result {
+    display: flex;
+    justify-content: flex-end;
+    justify-items: center;
+    flex-direction: column;
+    width: 90%;
+    margin-left: 1.5rem;
+    padding: 0;
+    text-align: left;
+}
+
+.stat-result-row {
+    display: flex;
+    justify-content:flex-end;
+    flex-direction: row;
+    width: 90%;
+    margin-left: 1.5rem;
+    padding: 0;
+    text-align: left;
+}
+
+.tag-style {
+    background-color: var(--highlight-color);
+    color: var(--neutral-light);
+    border-radius: 0.5rem;
+    padding:0.3rem 0.6rem; 
+    margin: 0.2rem ;
+}
+.height-row-stat {
+    min-height:2rem;
+ 
+}
+
+.profile-name {
+    color: var(--highlight-color);
+}
+
+.skill-card, .skill-card-data {
     background: var(--neutral-light);
     color: var(--neutral-dark);
     padding: 15px;
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.2s;
+    border:1px solid red;
+}
+
+.skill-card-data select {
+    border:1px solid orange;
+    color: var(--neutral-dark);
+    font-weight: 700;
+}
+
+
+
+.skill-card h2, .skill-card-data h2 {
+    font-size: 1.5rem;
+    padding: 0 0 0.5rem 0;
 }
 .skill-card:hover {
     transform: scale(1.05);
+    background-color: var(--background-color);
 }
+
+.stat:hover {
+
+    background-color: var(--background-color);
+}
+
+.skill-name {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+.small { 
+    font-size: 0.8rem;
+font-weight: 600;}
+
+
 .skill-detail {
     position: fixed;
     top: 0;
@@ -662,6 +837,39 @@ label, .label {
 
 .skill-detail.active {
     right: 0;  /* Moves in when 'active' is added */
+}
+
+.emoji {
+    font-size: 1.2rem;
+}
+
+.certification {
+    display: inline-block;
+    background-color: var(--button-primary-bg);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.badge {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    height: 20px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+
+.progress-level {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 .close-btn {
@@ -685,29 +893,218 @@ label, .label {
 
 .container {
     display: flex;
-    width: 100%;
+    flex-wrap: nowrap;
+    width: 800px;
+    padding: 0;
+    margin: 0;
+    gap:2rem;
   }
   
   .left-div {
-    width: 99%;
-    background-color: lightblue;
+    width: 380px;
     transition: width 0.3s ease;
+
+
+
   }
+
+
   
   .right-div {
-    width: 25%;
-    background-color: lightcoral;
+    width: 380px;
     transition: width 0.3s ease;
+    margin: 0;
+    padding: 2rem;
+right:0;
+position: fixed;
+background-color: var(--button-secondary-bg);
+
   }
+
+  .right-div input {
+    background-color: transparent;
+    color: var(--neutral-dark); 
+    border-radius: 0;
+    border-bottom: 3px solid red;
+    color: var(--neutral-light);
+    font-weight: bold;
+    outline: 0;
+    border: 0;
+    font-size: 1.5rem;
+}
   
-  a {
-    display: block;
+  .aold {
+    display: inline-block;
     padding: 10px;
     color: black;
     text-decoration: none;
+    white-space: nowrap;
   }
   
-  a:hover {
+  .aold:hover {
     background-color: #ddd;
   }
   
+
+.skill-link { 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--neutral-light);
+    color: var(--neutral-dark);
+    padding: 0.5rem 0.5rem;
+    border-radius: 8px;
+    margin: 0.1rem;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    user-select: none;
+}
+
+
+.avatar-container img {
+    width: 150px;  /* Adjust the size */
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;  /* Ensures the image fits the circle without distortion */
+}
+
+
+
+
+/* General card styling */
+.skill-detail {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    max-width: 400px;
+    margin: 10px auto;
+    position: relative;
+}
+
+.skill-detail h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.skill-detail p {
+    margin-bottom: 10px;
+}
+
+/* Proficiency (Star Rating) */
+.stars {
+    font-size: 1.5rem;
+    color: #ffbf00; /* Gold color for stars */
+}
+
+.stars .star {
+    margin-right: 5px;
+}
+
+.stars .filled {
+    color: #ffd700; /* Filled star color */
+}
+
+/* Progress Bar for Experience */
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #555;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-level {
+    height: 100%;
+    background-color: #4caf50; /* Green color for progress */
+    width: 0; /* This will be dynamically set with JS or Django variable */
+}
+
+/* Enjoyment (Emoji Faces) */
+.emoji {
+    font-size: 1.5rem;
+}
+
+/* Badge for Certification */
+.badge {
+    padding: 5px 10px;
+    background-color: #f39c12;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Context (Icons) */
+.icon {
+    font-size: 1.5rem;
+}
+
+/* Close button */
+.close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.orange-text { 
+    color: var(--highlight-color);
+}
+.red-text {
+    color: var(--accent-color)
+}
+
+.search-results {
+    background-color: var(--background-color);
+    color: var(--neutral-dark);
+    padding:1rem;
+}
+
+
+
+.skills-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    color: var(--neutral-dark);
+}
+
+.add-skill {
+    margin-bottom: 20px;
+}
+
+.skills-list {
+    margin-top: 20px;
+    color: var(--neutral-dark);
+}
+
+.skills-list ul {
+    list-style-type: none;
+    color: var(--neutral-dark);
+
+}
+
+.skills-list li {
+    margin-bottom: 15px;
+    color: var(--neutral-dark);
+
+}
+
+.skills-list li, .skills-list input {
+    color: var(--neutral-dark);
+}
+
+button {
+    margin-left: 10px;
+}

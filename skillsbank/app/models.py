@@ -1,6 +1,38 @@
 from django.db import models
 from django.contrib.auth.models import User
+import random
+import datetime
+import requests
 
+# Profile Unique Username
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    public_username = models.CharField(max_length=50, unique=True, blank=True)
+
+    def generate_public_username(self):
+        """Generate public username like 'skillac-word1-word2-0225'"""
+        def get_random_word():
+            try:
+                response = requests.get("https://api.datamuse.com/words?sp=????&max=50")
+                words = [word["word"] for word in response.json()]
+                return random.choice(words) if words else "default"
+            except:
+                return random.choice(["cool", "fast", "bold", "keen", "epic", "lucky"])
+
+        word1, word2 = get_random_word(), get_random_word()
+        while word1 == word2:
+            word2 = get_random_word()
+        month_year = datetime.datetime.now().strftime("%m%y")  # e.g., "0225"
+        return f"skillac-{word1}-{word2}-{month_year}"
+
+    def save(self, *args, **kwargs):
+        if not self.public_username:
+            self.public_username = self.generate_public_username()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.username} ({self.public_username})"
+    
 
 # Skill
 class Skill(models.Model):    
@@ -39,14 +71,20 @@ class Skill(models.Model):
 
 # Skill: Context
 class Context(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
+    class Meta:
+        ordering = ['name']
+        
     def __str__(self):
         return self.name
 
 # Skill: Category
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name

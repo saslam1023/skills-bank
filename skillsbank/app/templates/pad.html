@@ -67,3 +67,236 @@ xxxxxxxxxxxxxxxxx
 </div>
 
 {% endblock %}
+
+
+
+
+
+------------------
+
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="scrollable-area">
+
+    <!--
+    <div class="container">
+        <div class="left-div">
+          <a href="#" id="link-left">Left Link</a>
+          <a href="#" id="link-left2">Left Link</a>
+
+          <a href="#" id="link-left3">Left Link</a>
+
+          <a href="#" id="link-left4">Left Link</a>
+
+        </div>
+        <div class="right-div">
+          <a href="#" id="link-right">Right Link</a>
+        </div>
+      </div>
+    -->
+      
+      
+
+
+    <div class="category-form">
+          <h1 class="login-heading">Skills Dashboard</h1>
+          
+          <!-- Success Messages -->
+          {% if messages %}
+          <div class=auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+              {% for message in messages %}
+              <p>{{ message }}</p>
+              {% endfor %}
+          </div>
+          {% endif %}
+          
+          <!-- Form Errors -->
+          {% if form.errors %}
+          <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+              <p><strong>Please correct the following errors</strong></p>
+              <ul>
+                  {% for field, errors in form.errors.items %}
+                      <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+                  {% endfor %}
+              </ul>
+          </div>
+          {% endif %}
+          <hr>
+
+
+          {% for category, skills in skills_by_category.items %}
+          <div class="skill-categories">
+           
+                
+              <h2>{{ category }}</h2>
+              <hr>
+          </div>
+<div class="x">
+          <div class="left-div">
+            <div class="skills-grid">
+                {% for skill in skills %}
+                <a href="#" id="link-left">{{ skill.name }}</a>
+               <!-- <div class="skill-card" onclick="openSkill('{{ skill.id }}')">
+                    <h3>{{ skill.name }}</h3>
+                    </div>  -->  
+            </div>
+          </div>
+       
+
+            <div class="right-div">
+                <a href="#" id="link-right">Close</a>
+                <h2>{{ skill.name }}</h2>
+                <p><strong>Proficiency:</strong> {{ skill.proficiency }}</p>
+                <p><strong>Experience:</strong> {{ skill.experience }}</p>
+                <p><strong>Enjoyment:</strong> {{ skill.enjoyment }}</p>
+                <p><strong>Certification:</strong> {{ skill.certification }}</p>
+                <p><strong>Context:</strong> {{ skill.context }}</p>
+                <p><strong>Categories:</strong> 
+                    {% for category in skill.category.all %}
+                        {{ category.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <a href="{% url 'skill_detail' skill.id %}" class="detail-link">View Full Details</a>
+                </div>
+            {% endfor %}
+       
+            </div>
+
+        
+            
+</div>
+           
+          {% endfor %}
+          
+  
+
+</div>
+</div>
+<script>
+    function openSkill(skillId) {
+        document.getElementById(`skill-detail-${skillId}`).classList.add("active");
+        document.getElementById(`skill-detail-${skillId}`).classList.remove("hidden");
+    }
+    
+    function closeSkill(skillId) {
+        document.getElementById(`skill-detail-${skillId}`).classList.add("hidden");
+        document.getElementById(`skill-detail-${skillId}`).classList.remove("active");
+    }
+    </script>
+{% endblock %}
+
+
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="scrollable-area">
+
+  
+    <!---
+    <div class="container">
+        <div class="left-div">
+          <a href="#" id="link-left">Left Link</a>
+          <a href="#" id="link-left2">Left Link</a>
+
+          <a href="#" id="link-left3">Left Link</a>
+
+          <a href="#" id="link-left4">Left Link</a>
+
+        </div>
+        <div class="right-div">
+          <a href="#" id="link-right">Right Link</a>
+        </div>
+      </div>
+    -->
+      
+      
+
+
+    <div class="category-form">
+          <h1 class="login-heading">Skills Dashboard</h1>
+          
+          <!-- Success Messages -->
+          {% if messages %}
+          <div class=auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+              {% for message in messages %}
+              <p>{{ message }}</p>
+              {% endfor %}
+          </div>
+          {% endif %}
+          
+          <!-- Form Errors -->
+          {% if form.errors %}
+          <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+              <p><strong>Please correct the following errors</strong></p>
+              <ul>
+                  {% for field, errors in form.errors.items %}
+                      <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+                  {% endfor %}
+              </ul>
+          </div>
+          {% endif %}
+          <hr>
+
+
+          {% for category, skills in skills_by_category.items %}
+          <div class="skill-categoriesx">
+           
+                
+              <h2>{{ category }}</h2>
+              <hr>
+          </div>
+         
+           <div class="container">
+           
+                {% for skill in skills %}
+             <div class="left-div">
+                <a href="#" id="link-left">{{ skill.name }}</a>
+               <!--- <div class="skill-card" onclick="openSkill('{{ skill.id }}')">
+                    <h3>{{ skill.name }}</h3>
+                    </div>-->
+               </div>
+            
+
+<div class="right-div">
+    <a href="#" id="link-right">Close</a>
+
+                <div id="skill-detail-{{ skill.id }}" class="skill-detail ">
+                    <button class="close-btn" onclick="closeSkill('{{ skill.id }}')">&times;</button>
+                    <h2>{{ skill.name }}</h2>
+                    <p><strong>Proficiency:</strong> {{ skill.proficiency }}</p>
+                    <p><strong>Experience:</strong> {{ skill.experience }}</p>
+                    <p><strong>Enjoyment:</strong> {{ skill.enjoyment }}</p>
+                    <p><strong>Certification:</strong> {{ skill.certification }}</p>
+                    <p><strong>Context:</strong> {{ skill.context }}</p>
+                    <p><strong>Categories:</strong> 
+                        {% for category in skill.category.all %}
+                            {{ category.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <a href="{% url 'skill_detail' skill.id %}" class="detail-link">View Full Details</a>
+                </div>
+</div>
+            {% endfor %}
+            </div>
+        
+          {% endfor %}
+          
+  
+
+</div>
+</div>
+<script>
+    function openSkill(skillId) {
+        document.getElementById(`skill-detail-${skillId}`).classList.add("active");
+        document.getElementById(`skill-detail-${skillId}`).classList.remove("hidden");
+    }
+    
+    function closeSkill(skillId) {
+        document.getElementById(`skill-detail-${skillId}`).classList.add("hidden");
+        document.getElementById(`skill-detail-${skillId}`).classList.remove("active");
+    }
+    </script>
+{% endblock %}

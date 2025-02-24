@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="scrollable-area">
+    <div class="category-form">
+        <h1 class="login-heading">Skills Dashboard</h1>
+
+        {% if messages %}
+        <div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+            <p><strong>Please correct the following errors</strong></p>
+            <ul>
+                {% for field, errors in form.errors.items %}
+                <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <hr>
+
+        <div class="container">
+            <div class="left-div">
+               
+                {% for category, skills in skills_by_category.items %}
+                <div class="skill-categories">
+                    <h2>{{ category }}</h2>
+                    <hr> 
+                    <div class="skills-grid">
+                    {% for skill in skills %}
+                   
+                    <!-- Simple link without onclick -->
+                    <a href="#" class="skill-link skill-card" data-id="{{ skill.id }}" data-name="{{ skill.name }}" data-proficiency="{{ skill.proficiency }}" data-experience="{{ skill.experience }}" data-enjoyment="{{ skill.enjoyment }}" data-certification="{{ skill.certification }}" data-context="{{ skill.context }}">{{ skill.name }}</a>
+                   
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+          
+
+            <!-- Only ONE right div here, outside the loop -->
+            <div class="right-div">
+                <label for="skill-name">Skill Name:</label>
+                <input type="text" id="skill-name" value="" readonly>
+
+                <label for="skill-proficiency">Proficiency:</label>
+                <input type="text" id="skill-proficiency" value="" readonly>
+
+                <label for="skill-experience">Experience:</label>
+                <input type="text" id="skill-experience" value="" readonly>
+
+                <label for="skill-enjoyment">Enjoyment:</label>
+                <input type="text" id="skill-enjoyment" value="" readonly>
+
+                <label for="skill-certification">Certification:</label>
+                <input type="text" id="skill-certification" value="" readonly>
+
+                <label for="skill-context">Context:</label>
+                <input type="text" id="skill-context" value="" readonly>
+
+                <a href="#" id="link-right" onclick="clearFields()">Clear</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Wait for the document to load completely
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all skill links
+        const skillLinks = document.querySelectorAll('.skill-link');
+
+        // Loop through each link and add a click event listener
+        skillLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+
+                // Get the skill data from the data-* attributes
+                const skillName = link.getAttribute('data-name');
+                const proficiency = link.getAttribute('data-proficiency');
+                const experience = link.getAttribute('data-experience');
+                const enjoyment = link.getAttribute('data-enjoyment');
+                const certification = link.getAttribute('data-certification');
+                const context = link.getAttribute('data-context');
+
+                // Set the skill details in the right div
+                document.getElementById('skill-name').value = skillName;
+                document.getElementById('skill-proficiency').value = proficiency;
+                document.getElementById('skill-experience').value = experience;
+                document.getElementById('skill-enjoyment').value = enjoyment;
+                document.getElementById('skill-certification').value = certification;
+                document.getElementById('skill-context').value = context;
+            });
+        });
+    });
+
+    // Function to clear the fields in the right div
+    function clearFields() {
+        document.getElementById('skill-name').value = '';
+        document.getElementById('skill-proficiency').value = '';
+        document.getElementById('skill-experience').value = '';
+        document.getElementById('skill-enjoyment').value = '';
+        document.getElementById('skill-certification').value = '';
+        document.getElementById('skill-context').value = '';
+    }
+</script>
+{% endblock %}

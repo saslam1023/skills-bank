@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="scrollable-area bg-dark-grey text-white">
+
+    <div class="max-w-3xl w-full mx-auto p-6 skill-form">
+
+        <h1 class="login-heading">Skills data of {{ user.profile.public_username }}</h1>
+
+        <!-- User Bio Section -->
+        <div class="bio-section bg-gray-800 p-6 rounded-lg shadow mb-6">
+            <div class="bio">
+                <div class="avatar-container">
+                    <img src="{{ gravatar_url }}" alt="{{ user.username }}'s Avatar" class="rounded-full">
+                </div>
+                <div>
+                    <h1 class="login-heading text-2xl font-bold">{{ user.username }}</h1>
+                    <h2 class="profile-name"><strong>{{ user.profile.public_username }}</strong></h2>
+                    <p class="text-lg text-gray-400">{{ user.profile.tagline }}</p>
+                    <p class="mt-2 text-gray-300">{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Skills Table -->
+        <div class="skills-overview mt-6">
+            <h2 class="skill-form-heading">Manage Your Skills</h2>
+
+            <!-- Add New Skill Form -->
+            <div class="add-skill mb-6">
+                <h4 class="font-bold text-xl">Add New Skill</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" name="add_skill" class="mt-2 w-full button primary">Add Skill</button>
+                </form>
+            </div>
+
+            <!-- Display and Manage Existing Skills -->
+            <h4 class="font-bold text-xl">Your Skills</h4>
+            <table class="table-auto w-full text-left">
+                <thead>
+                    <tr class="bg-gray-700">
+                        <th class="px-4 py-2 text-sm font-semibold">Skill Name</th>
+                        <th class="px-4 py-2 text-sm font-semibold">Proficiency</th>
+                        <th class="px-4 py-2 text-sm font-semibold">Experience</th>
+                        <th class="px-4 py-2 text-sm font-semibold">Enjoyment</th>
+                        <th class="px-4 py-2 text-sm font-semibold">Category</th>
+                        <th class="px-4 py-2 text-sm font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for skill in skills %}
+                    <tr class="bg-gray-800">
+                        <td class="px-4 py-2">{{ skill.name }}</td>
+                        <td class="px-4 py-2">
+                            {% if skill.proficiency == 1 %}
+                                Beginner
+                            {% elif skill.proficiency == 2 %}
+                                Intermediate
+                            {% elif skill.proficiency == 3 %}
+                                Advanced
+                            {% elif skill.proficiency == 4 %}
+                                Expert
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">
+                            {% if skill.experience == 1 %}
+                                Less than a year
+                            {% elif skill.experience == 2 %}
+                                1-3 years
+                            {% elif skill.experience == 3 %}
+                                3-5 years
+                            {% elif skill.experience == 4 %}
+                                5+ years
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">
+                            {% if skill.enjoyment == 1 %}
+                                Low
+                            {% elif skill.enjoyment == 2 %}
+                                Medium
+                            {% elif skill.enjoyment == 3 %}
+                                High
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">{{ skill.category }}</td>
+                        <td class="px-4 py-2">
+                            <!-- Edit Skill Button -->
+                            <button type="button" class="text-blue-500" onclick="document.getElementById('editForm{{ skill.id }}').style.display='block'">Edit</button>
+                            
+                            <!-- Edit Skill Form (Hidden by default) -->
+                            <div id="editForm{{ skill.id }}" style="display:none; background-color: #2d3748; padding: 20px; margin-top: 10px;">
+                                <h4 class="font-bold text-xl">Edit Skill: {{ skill.name }}</h4>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="skill_id" value="{{ skill.id }}">
+                                    
+                                    <!-- Skill Name -->
+                                    <label for="skill_name_{{ skill.id }}" class="block text-sm font-semibold">Skill Name</label>
+                                    <input type="text" name="name" id="skill_name_{{ skill.id }}" value="{{ skill.name }}" class="w-full p-2 mb-4 bg-gray-700 text-white rounded">
+                                    
+                                    <!-- Proficiency -->
+                                    <label for="skill_proficiency_{{ skill.id }}" class="block text-sm font-semibold">Proficiency</label>
+                                    <select name="proficiency" id="skill_proficiency_{{ skill.id }}" class="w-full p-2 mb-4 bg-gray-700 text-white rounded">
+                                        <option value="1" {% if skill.proficiency == 1 %}selected{% endif %}>Beginner</option>
+                                        <option value="2" {% if skill.proficiency == 2 %}selected{% endif %}>Intermediate</option>
+                                        <option value="3" {% if skill.proficiency == 3 %}selected{% endif %}>Advanced</option>
+                                        <option value="4" {% if skill.proficiency == 4 %}selected{% endif %}>Expert</option>
+                                    </select>
+
+                                    <!-- Experience -->
+                                    <label for="skill_experience_{{ skill.id }}" class="block text-sm font-semibold">Experience</label>
+                                    <select name="experience" id="skill_experience_{{ skill.id }}" class="w-full p-2 mb-4 bg-gray-700 text-white rounded">
+                                        <option value="1" {% if skill.experience == 1 %}selected{% endif %}>Less than a year</option>
+                                        <option value="2" {% if skill.experience == 2 %}selected{% endif %}>1-3 years</option>
+                                        <option value="3" {% if skill.experience == 3 %}selected{% endif %}>3-5 years</option>
+                                        <option value="4" {% if skill.experience == 4 %}selected{% endif %}>5+ years</option>
+                                    </select>
+
+                                    <!-- Enjoyment -->
+                                    <label for="skill_enjoyment_{{ skill.id }}" class="block text-sm font-semibold">Enjoyment</label>
+                                    <select name="enjoyment" id="skill_enjoyment_{{ skill.id }}" class="w-full p-2 mb-4 bg-gray-700 text-white rounded">
+                                        <option value="1" {% if skill.enjoyment == 1 %}selected{% endif %}>Low</option>
+                                        <option value="2" {% if skill.enjoyment == 2 %}selected{% endif %}>Medium</option>
+                                        <option value="3" {% if skill.enjoyment == 3 %}selected{% endif %}>High</option>
+                                    </select>
+
+                                    <!-- Category -->
+                                    <label for="skill_category_{{ skill.id }}" class="block text-sm font-semibold">Category</label>
+                                    <input type="text" name="category" id="skill_category_{{ skill.id }}" value="{{ category }}" class="w-full p-2 mb-4 bg-gray-700 text-white rounded">
+                                    
+                                    <!-- Save and Cancel Buttons -->
+                                    <div class="flex justify-between">
+                                        <button type="submit" name="edit_skill" class="button primary">Save</button>
+                                        <button type="button" onclick="document.getElementById('editForm{{ skill.id }}').style.display='none'" class="button secondary">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Delete Skill -->
+                            <form method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="skill_id" value="{{ skill.id }}">
+                                <button type="submit" name="delete_skill" class="text-red-500" onclick="return confirm('Are you sure you want to delete this skill?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

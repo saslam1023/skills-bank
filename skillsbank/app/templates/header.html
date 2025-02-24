@@ -15,6 +15,12 @@
                 <strong><a href="{% url 'user_skills' %}" class="workspace-nav">Skills List</a></strong>
             </li>
             <li tabindex="1">
+                <strong><a href="{% url 'skills_dashboard' %}" class="workspace-nav">Skills Dashboard (List)</a></strong>
+            </li>
+            <li tabindex="1">
+                <strong><a href="{% url 'user_profile' username=user.username %}" class="workspace-nav">Profile</a></strong>
+            </li>
+            <li tabindex="1">
                 <strong><a href="{% url 'home' %}" class="workspace-nav">Home</a></strong>
             </li>
             <li tabindex="2">

@@ -2,97 +2,121 @@
 
 {% block content %}
 <div class="scrollable-area">
+    <div class="full-form">
+        <h1 class="login-heading">Skills List {{user.profile}}</h1>
 
-    <div class="container">
-        <div class="left-div">
-          <a href="#" id="link-left">Left Link</a>
-          <a href="#" id="link-left2">Left Link</a>
-
-          <a href="#" id="link-left3">Left Link</a>
-
-          <a href="#" id="link-left4">Left Link</a>
-
+        {% if messages %}
+        <div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
         </div>
-        <div class="right-div">
-          <a href="#" id="link-right">Right Link</a>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+            <p><strong>Please correct the following errors</strong></p>
+            <ul>
+                {% for field, errors in form.errors.items %}
+                <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+                {% endfor %}
+            </ul>
         </div>
-      </div>
-      
-      
-      
+        {% endif %}
+        <hr>
 
 
-    <div class="category-form">
-          <h1 class="login-heading">Skills Dashboard</h1>
-          
-          <!-- Success Messages -->
-          {% if messages %}
-          <div class=auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
-              {% for message in messages %}
-              <p>{{ message }}</p>
-              {% endfor %}
-          </div>
-          {% endif %}
-          
-          <!-- Form Errors -->
-          {% if form.errors %}
-          <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
-              <p><strong>Please correct the following errors</strong></p>
-              <ul>
-                  {% for field, errors in form.errors.items %}
-                      <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
-                  {% endfor %}
-              </ul>
-          </div>
-          {% endif %}
-          <hr>
+        <div class="search-results"><strong class="red-text">{{ skills_count }} skills</strong> in <strong class="orange-text">{{ categories_count }} categories</strong></div>
+
+        {% for category, skills in skills_by_category.items %}
 
 
-          {% for category, skills in skills_by_category.items %}
-          <div class="skill-categories">
-              <h2>{{ category }}</h2>
-              <hr>
-          </div>
-         
+        <div class="skill-categories">
+            <h2 class="skill-form-heading">{{ category }}</h2>
+            
             <div class="skills-grid">
                 {% for skill in skills %}
+                <div class="skill-card">
+                    <h2 class="skill-name">{{ skill.name }}</h2>
+                    <div class="skill-stats grid gap-4">
+                        <div class="stat">
+                            <p><strong>Proficiency </strong></p>
+                            <div class="stat-result"> {{ skill.get_proficiency_display }}
+                                <div class="progress-bar">
+                                    <div class="progress-level" style="width: {{ skill.proficiency_width }}%; background-color: {{ skill.proficiency_progress_color }};"></div>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="skill-card" onclick="openSkill('{{ skill.id }}')">
-                    <h3>{{ skill.name }}</h3>
+                        <div class="stat">
+                            <p><strong>Experience </strong></p>
+                            <div class="stat-result">
+                                <p>{{ skill.get_experience_display }}</p>
+                                <div class="progress-bar">
+                                    <div class="progress-level" style="width: {{ skill.progress_width }}%; background-color: {{ skill.progress_color }};"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat">
+                            <p><strong>Enjoyment </strong></p>
+                            <div class="stat-result-row">
+                                <p>
+                                    {% if skill.enjoyment == 1 %} Dislike <span class="emoji">😕</span>
+                                    {% elif skill.enjoyment == 2 %} Neutral <span class="emoji">🙂</span>
+                                    {% elif skill.enjoyment == 3 %} Moderate <span class="emoji">🙂</span>
+                                    {% elif skill.enjoyment == 4 %} Strong <span class="emoji">😃</span>
+                                    {% elif skill.enjoyment == 5 %} Passionate <span class="emoji">😍</span>
+                                    {% else %} Unavailable
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="stat height-row-stat">
+                            <p><strong>Context </strong></p>
+                            <div class="stat-result-row">
+                               
+                                    {% for context in skill.context.all %} 
+                                    
+                                    <span class="tag-style small">
+                                        {% if context.name == 'Personal Project' %} 
+                                            Personal Project</span>
+                                        {% elif context.name == 'Professional Work' %} 
+                                            Professional Work
+                                        {% elif context.name == 'Educational' %} 
+                                            Educational
+                                        {% elif context.name == 'Volunteer' %} 
+                                            Volunteer
+                                        {% elif context.name == 'Research' %} 
+                                            Research
+                                        {% else %} 
+                                            Unavailable
+                                        {% endif %}
+                                    </span>
+                                
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="stat">
+                            <p><strong>Certification</strong></p>
+                            <div class="stat-result-row">
+                                <div class="certification">
+                                    {% if skill.certification %}
+                                        <span class="badge">{{ skill.certification }}</span>
+                                    {% else %}
+                                        <span>No certifications listed</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-            
-                <div id="skill-detail-{{ skill.id }}" class="skill-detail ">
-                    <button class="close-btn" onclick="closeSkill('{{ skill.id }}')">&times;</button>
-                    <h2>{{ skill.name }}</h2>
-                    <p><strong>Proficiency:</strong> {{ skill.proficiency }}</p>
-                    <p><strong>Experience:</strong> {{ skill.experience }}</p>
-                    <p><strong>Enjoyment:</strong> {{ skill.enjoyment }}</p>
-                    <p><strong>Certification:</strong> {{ skill.certification }}</p>
-                    <p><strong>Context:</strong> {{ skill.context }}</p>
-                    <p><strong>Categories:</strong> 
-                        {% for category in skill.category.all %}
-                            {{ category.name }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </p>
-                    <a href="{% url 'skill_detail' skill.id %}" class="detail-link">View Full Details</a>
                 </div>
-            {% endfor %}
+                {% endfor %}
             </div>
-          {% endfor %}
-          
-  
-
+        </div>
+        {% endfor %}
+    </div>
 </div>
-</div>
-<script>
-    function openSkill(skillId) {
-        document.getElementById(`skill-detail-${skillId}`).classList.add("active");
-        document.getElementById(`skill-detail-${skillId}`).classList.remove("hidden");
-    }
-    
-    function closeSkill(skillId) {
-        document.getElementById(`skill-detail-${skillId}`).classList.add("hidden");
-        document.getElementById(`skill-detail-${skillId}`).classList.remove("active");
-    }
-    </script>
 {% endblock %}

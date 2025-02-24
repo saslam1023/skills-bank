@@ -1,41 +1,51 @@
 
-{% extends "base.html" %}
+  {% extends "base.html" %}
 {% block content %}
 <div class="scrollable-area">
     <div class="skills-bank-wrapper">
-    <div class="logo-large"><span class="red-text font-bold">Skills</span>Bank</div>
-    <h2 class="text-center mt-2">Access a Wealth of Expertise</h2>
+        <div class="logo-large"><span class="red-text font-bold">Skills</span>Bank</div>
+        <h2 class="text-center mt-2">Access a Wealth of Expertise</h2>
 
-    <div id="noSkillsMessage" class="text-red-500 text-sm mt-2 hidden text-center">
-      No skills found matching your search.
-    </div>
+        <!-- Search Form -->
+        <form method="get" action="{% url 'search_users_by_skill' %}">
+            <div class="mt-8 flex flex-col items-center">
+                <div class="flex gap-2 relative">
+                    <div class="autocomplete-container">
+                        <input id="searchInput" type="text" name="search" placeholder="Find skill (e.g., CSS, design)"
+                            class="w-80 px-4 py-2 custom-focus" />
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded">Search</button>
+                </div>
+            </div>
+        </form>
 
-    <div class="mt-8 flex flex-col items-center">
-      <div class="flex gap-2 relative">
-        <div class="autocomplete-container">
-          <input id="searchInput" type="text" placeholder="Find skill (e.g., CSS, design)"
-            class="w-80 px-4 py-2 custom-focus" />
-          <ul id="autocompleteList" class="autocomplete-list hidden"></ul>
+        <!-- Results section -->
+        {% if query %}
+        <div class="mt-8">
+            <h2 class="text-xl font-bold">Search Results for <span class='orange-text'>{{ query }}</span></h2>
+            
+            <div class="search-results">
+            {% if results_message %}
+            <p>{{ results_message|safe }}</p>
+        {% endif %}
+      </div>
+<hr>        
+<div class="search-results">
+            {% if users_with_skills %}
+                <ul>
+                    {% for username in users_with_skills %}
+                    
+                        <li class="font-bold">
+                            <a href="{% url 'public_user_profile' username=username %}">{{ username }}</a> 
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No users found with those skills.</p>
+            {% endif %}
         </div>
-      </div>
-    </div>
-
-    <div class="mt-8 flex justify-around items-start">
-      <div class="overflow-hidden">
-        <h2 class="text-xl font-bold bg-gray-200 p-4 text-gray-700">Skills List
-          <span id="skillsTotalCount" class="text-sm font-normal text-gray-500"></span>
-        </h2>
-    
-        <div id="skillList" class="divide-y divide-gray-200"></div>
-      </div>
-      <div id="skillsFoundContainer" class="w-1/3 bg-white overflow-hidden">
-        <h2 class="text-xl font-bold bg-gray-200 p-4 text-gray-700 flex justify-between items-center">
-          Skills Found
-          <span id="skillsFoundCount" class="text-sm font-normal text-gray-500"></span>
-        </h2>
-        <ol id="skillsFoundList" class="list-decimal list-inside p-4 space-y-2"></ol>
-      </div>
+        </div>
+        {% endif %}
     </div>
 </div>
-  </div>
-  {% endblock %}
+{% endblock %}
