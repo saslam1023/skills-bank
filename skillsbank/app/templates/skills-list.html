@@ -71,7 +71,7 @@
                             <div class="stat-result">
                                 <p>{{ skill.get_enjoyment_display }}</p>
                                 <div class="progress-bar">
-                                    <div class="progress-level" style="width: {{ skill.enjoyment_width }}%; background-color: {{ skill.progress_color }};"></div>
+                                    <div class="progress-level" style="width: {{ skill.enjoyment_width }}%; background-color: {{ skill.enjoyment_progress_color }};"></div>
                                 </div>
                             </div>
                         </div>
@@ -79,39 +79,40 @@
                         <div class="stat height-row-stat">
                             <p><strong>Context </strong></p>
                             <div class="stat-result-row">
-                               
+                                {% if skill.context.all %}
                                     {% for context in skill.context.all %} 
-                                    
-                                    <span class="tag-style small">
-                                        {% if context.name == 'Personal Project' %} 
-                                            Personal Project</span>
-                                        {% elif context.name == 'Professional Work' %} 
-                                            Professional Work
-                                        {% elif context.name == 'Educational' %} 
-                                            Educational
-                                        {% elif context.name == 'Volunteer' %} 
-                                            Volunteer
-                                        {% elif context.name == 'Research' %} 
-                                            Research
-                                        {% else %} 
-                                            Unavailable
-                                        {% endif %}
-                                    </span>
-                                
-                                {% endfor %}
+                                        <span class="tag-style small">
+                                            {% if context.name == 'Personal Project' %} 
+                                                Personal Project
+                                            {% elif context.name == 'Professional Work' %} 
+                                                Professional Work
+                                            {% elif context.name == 'Educational' %} 
+                                                Educational
+                                            {% elif context.name == 'Volunteer' %} 
+                                                Volunteer
+                                            {% elif context.name == 'Research' %} 
+                                                Research
+                                            {% else %} 
+                                                Unavailable
+                                            {% endif %}
+                                        </span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class=" small">None listed</span>
+                                {% endif %}
                             </div>
                         </div>
+                        
                         
                         <div class="stat">
                             <p><strong>Certification</strong></p>
                             <div class="stat-result-row small">
-                                
                                     {% if skill.certification %}
                                         <span class="badge">{{ skill.certification }}</span>
                                     {% else %}
                                         <span>None listed</span>
                                     {% endif %}
-                              
+                    
                             </div>
                         </div>
                     </div>

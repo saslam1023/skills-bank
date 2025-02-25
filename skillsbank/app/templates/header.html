@@ -10,7 +10,7 @@
         <ul class="nav blue-text-nav">
             {% if user.is_authenticated %}
             <li tabindex="1">
-                <strong><a href="{% url 'home' %}" class="workspace-nav">{{user}}</a></strong>
+                <strong><a href="{% url 'home' %}" class="workspace-nav">{{request.user}}</a></strong>
             </li>            
             <li tabindex="2">
                 <strong><a href="{% url 'add_skill' %}" class="hub-nav">Add Skill</a></strong>

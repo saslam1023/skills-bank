@@ -486,8 +486,14 @@ align-content: center;
     color: var(--neutral-light);
   }
 
+  .skill-categories {
+    background-color: var(--bg-light);
+    color: var(--neutral-dark);
+  }
+
   .skill-container {
     margin: 1rem 0;
+    max-width:800px;
   }
 
   .skills-table {
@@ -937,6 +943,7 @@ label, .label {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-top: 1rem;
+    width: 800px;
 }
 
 .skills-grid-home div {
@@ -1037,7 +1044,7 @@ label, .label {
     border-radius: 0.5rem;
     padding: 0.3rem; 
     justify-content: center;
-    margin: 0;
+    margin: 0 0.5rem;
 }
 .height-row-stat {
     min-height:2rem;

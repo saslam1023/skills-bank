@@ -4,7 +4,7 @@
 {% block content %}
 <div class="scrollable-area">
   <div class="full-form">
-      <h1 class="login-heading">Welcome to your <strong class="red-text">Skills</strong>Bank, {{ user}} </h1>
+      <h1 class="login-heading">Welcome, <strong class="red-text">{{ user}} </strong></h1>
 
       {% if messages %}
       <div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
@@ -26,6 +26,7 @@
       {% endif %}
       <hr>
 
+      <div class="skil-container">
 <div class="skills-grid-home">
   
       <!-- Skills list link -->
@@ -52,15 +53,15 @@
           </ul>
       {% endif %}
 
-      <button type="submit" class="w-full button primary">Save Skill</button>
+      <button type="submit" class="w-full button ">Save Skill</button>
   </form>
   </div>
 
     <!-- Account link -->
-    <a href="{% url 'skill_account' %}" class="skills-home red-bg"><h2><strong>{{user}}</strong> Account</h2></a>
+    <a href="{% url 'skill_account' %}" class="skills-home gray-bg"><h2><strong>{{user}}</strong> Account</h2></a>
 
     <!-- Search link -->
-  <div class="skills-home blue-bg"><h2><strong>Search</strong> Skills</h2>
+  <div class="skills-home red-bg"><h2><strong>Search</strong> Skills</h2>
     <form method="get" action="{% url 'search_users_by_skill' %}">
         <input id="searchInput" type="text" name="search" placeholder="Find skill"
             class="px-4 py-2 custom-focus input-container" />
@@ -71,6 +72,7 @@
 
 
 
+  </div>
   </div>
   </div>
   </div>

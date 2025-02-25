@@ -12,6 +12,8 @@ import hashlib
 from django.core.mail import send_mail
 import os
 from dotenv import load_dotenv
+from django.conf import settings
+
 
 load_dotenv()
 
@@ -85,20 +87,24 @@ def contact(request):
             email = form.cleaned_data["email"]
             message = form.cleaned_data["message"]
 
-            # Send email using environment variables
-            send_mail(
-                subject=f"Contact Form Message from {name}",
-                message=f"From: {name} ({email})\n\n{message}",
-                from_email=os.getenv("MAIL_DEFAULT_SENDER"),  
-                recipient_list=[os.getenv("EMAIL_CONTACT")],  
-                fail_silently=False,
-            )
+            try:
+                send_mail(
+                    subject=f"Contact Form Message from {name}",
+                    message=f"From: {name} ({email})\n\n{message}",
+                    from_email=settings.DEFAULT_FROM_EMAIL,  # Use Django settings
+                    recipient_list=[settings.EMAIL_CONTACT],  # Use settings instead of getenv
+                    fail_silently=False,
+                )
 
-            messages.success(request, "Thanks for your message. Your message was  sent successfully.")
-            return render(request, "contact.html", {"form": ContactForm()})  
+                messages.success(request, "Thanks for your message. Your message was sent successfully.")
+                return render(request, "contact.html", {"form": ContactForm()})  
+
+            except Exception as e:
+                messages.error(request, f"Your message was not sent. Error: {e}")
+
         else:
-            messages.error(request, "Your message was  not sent.")
-            return render(request, "contact.html", {"form": ContactForm()})  
+            messages.error(request, "Your message was not sent. Please check the form and try again.")
+
     else:
         form = ContactForm()
 
@@ -162,8 +168,10 @@ def skills_directory(request):
             skill.progress_color = 'blue'
         elif skill.experience == 4:
             skill.progress_color = 'lightgreen'
-        else:
+        elif skill.experience == 5:
             skill.progress_color = 'green'
+        else:
+            skill.progress_color = 'grey'
 
     for skill in skills:
         skill.proficiency_width = skill.proficiency * 20  
@@ -175,8 +183,10 @@ def skills_directory(request):
             skill.proficiency_progress_color = 'blue'
         elif skill.proficiency == 4:
             skill.proficiency_progress_color = 'lightgreen'
+        elif skill.proficiency == 5:
+            skill.proficiency_progress_color = 'green'
         else:
-            skill.progress_color = 'green'
+            skill.proficiency_progress_color = 'grey'
 
     total_skills = len(skills)
     total_categories = len(skills_by_category)
@@ -290,8 +300,10 @@ def user_skills(request):
             skill.progress_color = 'lightblue'
         elif skill.experience == 4:
             skill.progress_color = 'lightgreen'
-        else:
+        elif skill.experience == 5:
             skill.progress_color = 'green'
+        else:
+            skill.progress_color = 'grey'
 
     for skill in skills:
         skill.proficiency_width = skill.proficiency * 20  
@@ -303,8 +315,10 @@ def user_skills(request):
             skill.proficiency_progress_color = 'lightblue'
         elif skill.proficiency == 4:
             skill.proficiency_progress_color = 'lightgreen'
+        elif skill.proficiency == 5:
+            skill.proficiency_progress_color = 'green'
         else:
-            skill.proficiency_color = 'green'
+            skill.proficiency_progress_color = 'grey'
 
     for skill in skills:
         skill.enjoyment_width = skill.enjoyment * 20  
@@ -315,9 +329,11 @@ def user_skills(request):
         elif skill.enjoyment == 3:
             skill.enjoyment_progress_color = 'lightblue'
         elif skill.enjoyment == 4:
-            skill.enjoyment_progress_color = 'red'
+            skill.enjoyment_progress_color = 'lightgreen'
+        elif skill.enjoyment == 5:
+            skill.enjoyment_progress_color = 'green'
         else:
-            skill.enjoyment_color = 'green'
+            skill.enjoyment_progress_color = 'grey'
 
     total_skills = len(skills)
     total_categories = len(skills_by_category)
@@ -411,25 +427,21 @@ def delete_skill(request, skill_id):
 @csrf_exempt
 @login_required
 def user_profile(request, username):
-    # Ensure the logged-in user can only view their own profile
     if request.user.username != username:
-        return redirect('index')  # or a page like 'profile_not_allowed' or similar
-
-    # Get the user object based on the username
+        return redirect('index')  
+    
     user = get_object_or_404(User, username=username)
 
     email = user.email.strip().lower()
     email_hash = hashlib.md5(email.encode('utf-8')).hexdigest()
-    gravatar_url = f"https://www.gravatar.com/avatar/{email_hash}?s=200"  # s=200 is size (200x200)
+    gravatar_url = f"https://www.gravatar.com/avatar/{email_hash}?s=200"  
     
-    # Get skills sorted by different attributes
     top_skills = Skill.objects.filter(user=user).order_by('-proficiency')[:10]
     recent_skills = Skill.objects.filter(user=user).order_by('-id')[:10]
     most_experienced_skills = Skill.objects.filter(user=user).order_by('-experience')[:5]
     most_enjoyable_skills = Skill.objects.filter(user=user).order_by('-enjoyment')[:5]
     most_proficient_skills = Skill.objects.filter(user=user).order_by('-proficiency')[:5]
 
-    # Certifications are stored in Skill as a string, so fetch skills with a non-null certification
     certifications = Skill.objects.filter(user=user).exclude(certification__isnull=True).exclude(certification="")
 
     return render(request, 'profile.html', {
@@ -446,17 +458,14 @@ def user_profile(request, username):
 
 """ Public User Profile View"""
 def public_user_profile(request, username):
-    # Get the profile object based on the public_username
     profile = get_object_or_404(Profile, public_username=username)
 
-    # Get the associated user object
     user = profile.user
 
     email = user.email.strip().lower()
     email_hash = hashlib.md5(email.encode('utf-8')).hexdigest()
-    gravatar_url = f"https://www.gravatar.com/avatar/{email_hash}?s=200"  # s=200 is size (200x200)
+    gravatar_url = f"https://www.gravatar.com/avatar/{email_hash}?s=200"  
     
-    # Get skills sorted by different attributes
     top_skills = Skill.objects.filter(user=user).order_by('-proficiency')[:10]
     recent_skills = Skill.objects.filter(user=user).order_by('-id')[:10]
     most_experienced_skills = Skill.objects.filter(user=user).order_by('-experience')[:5]
