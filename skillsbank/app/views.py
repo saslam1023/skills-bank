@@ -5,18 +5,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
-from .forms import CustomPasswordResetView, CustomUserCreationForm, SkillForm
+from .forms import CustomPasswordResetView, CustomUserCreationForm, SkillForm, SimpleSkillForm, ContactForm
 from .models import Skill, Category, Profile
 import json
 import hashlib
+from django.core.mail import send_mail
+import os
+from dotenv import load_dotenv
 
-
-
+load_dotenv()
 
 """ Home (User Logged in)"""
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    context = {
+        "username": request.user.username  
+    }
+    return render(request, 'home.html', context)
 
 
 """ Index (Public)"""
@@ -61,7 +66,7 @@ def search_users_by_skill(request):
 
 """ Terms (Public)"""
 def terms(request):
-    return render(request, 'add-skill.html')
+    return render(request, 'terms.html')
 
 """ Privacy (Public)"""
 def privacy(request):
@@ -73,17 +78,50 @@ def about(request):
 
 """ Contact (Public)"""
 def contact(request):
-    return render(request, 'contact.html')
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            email = form.cleaned_data["email"]
+            message = form.cleaned_data["message"]
 
-""" CS50 Test page (Public)"""
-def cs50(request):
-    return render(request, 'cs50.html')
+            # Send email using environment variables
+            send_mail(
+                subject=f"Contact Form Message from {name}",
+                message=f"From: {name} ({email})\n\n{message}",
+                from_email=os.getenv("MAIL_DEFAULT_SENDER"),  
+                recipient_list=[os.getenv("EMAIL_CONTACT")],  
+                fail_silently=False,
+            )
+
+            messages.success(request, "Thanks for your message. Your message was  sent successfully.")
+            return render(request, "contact.html", {"form": ContactForm()})  
+        else:
+            messages.error(request, "Your message was  not sent.")
+            return render(request, "contact.html", {"form": ContactForm()})  
+    else:
+        form = ContactForm()
+
+    return render(request, "contact.html", {"form": form})
 
 """  (Public)"""
 #@csrf_exempt
 #@login_required
-def add_skill(request):
-    return render(request, 'add-skill.html')
+def add_quick_skill(request):
+    if request.method == 'POST':
+        form = SimpleSkillForm(request.POST)
+
+        if form.is_valid():
+            skill = form.save(commit=False)  
+            skill.user = request.user  
+            skill.save() 
+
+            messages.success(request, 'Skill added successfully.')
+            return redirect("add-quick-skill") 
+    else:
+        form = SimpleSkillForm()
+
+    return render(request, 'home.html', {'form': form})
 
 
 def skill_detail(request, skill_id):
@@ -92,17 +130,21 @@ def skill_detail(request, skill_id):
 
 
 
-def skills_dashboard(request):
+def skills_directory(request):
     skills = Skill.objects.all()
 
-    skills_by_category = {}
+    skills_by_category = {"Uncategorised": []} 
     skills_by_context = {}
 
     for skill in skills:
-        for category in skill.category.all():  
-            if category.name not in skills_by_category:
-                skills_by_category[category.name] = []
-            skills_by_category[category.name].append(skill)
+        categories = skill.category.all()
+        if categories.exists():  
+            for category in categories:
+                if category.name not in skills_by_category:
+                    skills_by_category[category.name] = []
+                skills_by_category[category.name].append(skill)
+        else:
+            skills_by_category["Uncategorised"].append(skill)
 
     for skill in skills:
         for context in skill.context.all():  
@@ -136,13 +178,12 @@ def skills_dashboard(request):
         else:
             skill.progress_color = 'green'
 
-    # Count total number of skills and categories
     total_skills = len(skills)
     total_categories = len(skills_by_category)
 
     print("Skills grouped by category:", {'skills_by_category': skills_by_category})
 
-    return render(request, 'skills-dashboard.html', {
+    return render(request, 'skills-directory.html', {
         'skills_by_category': skills_by_category, 
         'skills_by_context': skills_by_context,
         'skills' : skills,
@@ -191,7 +232,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)  
-            return redirect("profile") 
+            return redirect("home") 
     else:
         form = CustomUserCreationForm()
     return render(request, "register.html", {"form": form})
@@ -209,26 +250,90 @@ def password_reset_view(request):
 """ Skills """
 # Main Site Content
 
+""" Skills Table View """
+@login_required
+def skill_account(request):
+    skills = Skill.objects.filter(user=request.user).order_by('-id')  
+    return render(request, 'skills-account.html', {'skills': skills})
+
 """ User Skills """
 def user_skills(request):
     skills = Skill.objects.filter(user=request.user)
 
+    skills_by_category = {"Uncategorised": []} 
+    skills_by_context = {}
+
     for skill in skills:
-        skill.progress_width = skill.experience * 20  # Map experience level (1-5) to width (0-100)
+        categories = skill.category.all()
+        if categories.exists():  
+            for category in categories:
+                if category.name not in skills_by_category:
+                    skills_by_category[category.name] = []
+                skills_by_category[category.name].append(skill)
+        else:
+            skills_by_category["Uncategorised"].append(skill)
+    
+
+    for skill in skills:
+        for context in skill.context.all():  
+            if context.name not in skills_by_context:
+                skills_by_context[context.name] = []
+            skills_by_context[context.name].append(skill)
+
+    for skill in skills:
+        skill.progress_width = skill.experience * 20  
         if skill.experience == 1:
             skill.progress_color = 'yellow'
         elif skill.experience == 2:
             skill.progress_color = 'orange'
         elif skill.experience == 3:
-            skill.progress_color = 'blue'
+            skill.progress_color = 'lightblue'
         elif skill.experience == 4:
             skill.progress_color = 'lightgreen'
         else:
             skill.progress_color = 'green'
 
+    for skill in skills:
+        skill.proficiency_width = skill.proficiency * 20  
+        if skill.proficiency == 1:
+            skill.proficiency_progress_color = 'yellow'
+        elif skill.proficiency == 2:
+            skill.proficiency_progress_color = 'orange'
+        elif skill.proficiency == 3:
+            skill.proficiency_progress_color = 'lightblue'
+        elif skill.proficiency == 4:
+            skill.proficiency_progress_color = 'lightgreen'
+        else:
+            skill.proficiency_color = 'green'
 
-                
-    return render(request, 'skills-list.html', {'skills': skills})
+    for skill in skills:
+        skill.enjoyment_width = skill.enjoyment * 20  
+        if skill.enjoyment == 1:
+            skill.enjoyment_progress_color = 'yellow'
+        elif skill.enjoyment == 2:
+            skill.enjoyment_progress_color = 'orange'
+        elif skill.enjoyment == 3:
+            skill.enjoyment_progress_color = 'lightblue'
+        elif skill.enjoyment == 4:
+            skill.enjoyment_progress_color = 'red'
+        else:
+            skill.enjoyment_color = 'green'
+
+    total_skills = len(skills)
+    total_categories = len(skills_by_category)
+
+
+    print("Skills grouped by category:", {'skills_by_category': skills_by_category})
+
+    return render(request, 'skills-list.html', {
+        'skills_by_category': skills_by_category, 
+        'skills_by_context': skills_by_context,
+        'skills' : skills,
+        'skills_count': total_skills,
+        'categories_count': total_categories
+    })
+
+
 
 
 """ Create Skill """
@@ -278,6 +383,30 @@ def add_skill(request):
 
     return render(request, 'add-skill.html', {'form': form})
 
+""" Edit User Skills """
+def edit_skill(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id)
+    
+    if request.method == "POST":
+        form = SkillForm(request.POST, instance=skill)
+        if form.is_valid():
+            form.save()
+            return redirect('skill_account')
+    else:
+        form = SkillForm(instance=skill)
+
+    return render(request, 'edit-skill.html', {'form': form, 'skill': skill})
+
+
+""" Delete User Skills """
+def delete_skill(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id)
+
+    if request.method == "POST":
+        skill.delete()
+        return redirect('skill_account')
+
+    return render(request, 'delete-skill.html', {'skill': skill})
 
 @csrf_exempt
 @login_required

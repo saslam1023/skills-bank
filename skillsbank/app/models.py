@@ -44,21 +44,24 @@ class Skill(models.Model):
         (4, "Advanced"),
         (5, "Expert"),
         (6, "Master"),
-    ])
+        (7, "Not set"),
+    ], default=7)
     experience = models.PositiveIntegerField(choices=[
         (1, "Limited"),
         (2, "Basic"),
         (3, "Moderate"),
         (4, "Extensive"),
         (5, "Vast"),
-    ])
+        (6, "Not set"),
+    ], default=6)
     enjoyment = models.PositiveIntegerField(choices=[
         (1, "Dislike"),
         (2, "Neutral"),
         (3, "Moderate"),
         (4, "Strong"),
         (5, "Passionate"),
-    ])
+        (6, "Not set"),
+    ], default=6)
     context = models.ManyToManyField('Context', blank=True)
     certification = models.CharField(max_length=255, blank=True, null=True)
     category = models.ManyToManyField('Category', blank=True)

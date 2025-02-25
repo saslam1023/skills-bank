@@ -5,6 +5,7 @@
     --primary-color: #2C3E50; /* Dark blue-gray for professionalism */
     --secondary-color: #8E44AD; /* Rich purple for creativity and innovation */
     --accent-color: #E74C3C; /* Strong red for attention-grabbing highlights */
+    --bg-light: #eeeeee; 
     --highlight-color: #F39C12; /* Bright yellow for optimism and clarity */
     --neutral-light: #ECF0F1; /* Light gray for a clean, modern background */
     --neutral-dark: #34495E; /* Dark gray for sophisticated accents */
@@ -125,6 +126,10 @@ footer {
 
 }
 
+.footer nav a {
+    font-size: 1rem;
+}
+
 /* Logo */
 .logo {
 	display: block;
@@ -165,6 +170,26 @@ footer {
     text-align: center;
 }
 
+.logo-large-inline {
+	display: inline;
+    justify-self: center;
+	position: relative;
+	color: var(--neutral-dark);
+	background-color: var(--neutral-light);
+	border-radius: 0;
+	padding: 1rem;
+	border: 0px solid var(--neutral-light);
+	z-index: 1000;
+	font-size: 3rem;
+    width: fit-content;
+    text-align: center;
+}
+
+.h1-inline { 
+    font-size: 3rem; 
+    text-align: left;
+margin: 2rem 0;}
+
 
 /* Navigation */
 
@@ -183,7 +208,8 @@ nav a {
 	display: flex;
 	justify-content: space-between;
 	padding: 0;
-	font-weight: 700;
+	font-size:1.5rem;
+    font-weight: 100;
 }
 
 .nav li {
@@ -197,12 +223,12 @@ nav a {
 	padding: 0;
 	margin-left: 2rem;
 	border-radius: 5px;
-	transition: background-color 0.3s ease;
+	transition: color 0.3s ease;
 }
 
 .nav a:hover {
 	text-decoration: underline;
-	color: var(--bright-blue);
+	color: var(--highlight-color);
 
 }
 
@@ -378,10 +404,41 @@ width:250px;
     margin-top: 0.5rem;
 }
 
-.enjoyment-options, .proficiency-options, .experience-options  {
+.enjoyment-options, .proficiency-options, .experience-options {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+    justify-content: center;
+}
+
+
+.options {
+display: flex;
+flex-direction: row;
+gap: 0.5rem;
+}
+
+.delete-options {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    }
+
+.delete-cancel { 
+    height:4rem; 
+background-color: transparent;
+align-content: center;
+}
+
+.delete-cancel:hover {
+    color: var(--neutral-light);
+}
+
+.options select { 
+    height: min-content; 
+    align-self:last baseline;
+    font-weight: 700;
 }
 
 .enjoyment-item label, .proficiency-item label, .experience-item label {
@@ -392,10 +449,13 @@ width:250px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 0.1rem;
+    margin: 1rem 0;
     justify-self: center;
-    width: 200px;
+    min-width: 160px;
+    
 }
+
+#add-skill-form { margin-bottom: 4rem;}
 
 .category-options label, 
 .context-options label, 
@@ -418,13 +478,84 @@ width:250px;
     user-select: none;
   }
 
-  .skill-categories {
+  .skill-categories, .skill-list {
     font-size: 1.5rem;
-    margin: 2rem 0 1rem 0;
-    background-color: var(--highlight-color);
+    margin: 1rem 0;
+    background-color: var(--text-secondary);
     padding:1rem;
-    color: var(--neutral-dark);
+    color: var(--neutral-light);
   }
+
+  .skill-container {
+    margin: 1rem 0;
+  }
+
+  .skills-table {
+    margin: 2rem 0;
+    border-collapse: collapse; /* Ensures no extra spacing */
+    width: 100%; /* Makes the table full width */
+}
+
+.skills-table td {
+    padding: 0.4rem 1rem;
+    border-right: 20px var(--neutral-dark);
+}
+
+.skills-table th {
+    border-bottom: 20px var(--neutral-dark);
+    padding: 1rem 0.5rem;
+    color: var(--neutral-dark);
+    text-align: left;
+    background-color: var(--neutral-light);
+}
+
+/* Alternating row colors */
+.skills-table tbody tr:nth-child(even) {
+    background-color: #2b3c4e; /* Darker shade for even rows */
+}
+
+.skills-table tbody tr:nth-child(odd) {
+    background-color: #445e79be;/* Slightly darker for odd rows */
+}
+
+/* Hover effect */
+.skills-table-no tbody tr:hover {
+    background-color: #F39C12;/* Highlight on hover */
+    color: var(--neutral-dark);
+}
+
+/* Styling for the "Edit" link */
+.skills-table a {
+    background-color: var(--button-primary-bg); 
+    text-decoration: none;
+    font-weight: bold;
+    color: white ;
+    border-radius: 0.5rem;
+    padding: 0.3rem; 
+    justify-content: center;
+    margin: 0;
+    width: 60px;
+    text-align: center;
+}
+
+a.red-bg {
+    background-color: var(--accent-color);
+}
+a.gray-bg {
+    color: var(--neutral-light);
+}
+
+a.gray-bg:hover {
+    background-color: var(--button-secondary-bg);
+    color: var(--neutral-light);
+}
+
+
+.skills-table a:hover {
+    background-color: var(--highlight-color);
+
+}
+
   
   .category-options label:hover, 
   .context-options label:hover, 
@@ -454,15 +585,15 @@ width:250px;
   }
 
   .enjoyment-options label {
-    background-color: brown;
+    background-color:var(--accent-color);
   }
 
   .proficiency-options label {
-    background-color: teal;
+    background-color: var(--secondary-color);
   }
 
   .experience-options label {
-    background-color: cornflowerblue;
+    background-color: var(--button-primary-bg);
   }
 
 
@@ -471,27 +602,44 @@ width:250px;
     font-size: 3rem;
 }
 
-
-
-
+.loggedin-heading {
+    font-size: 3rem;
+    margin:3rem 0 ;
+    font-weight: 100;
+    background-color: var(--neutral-light);
+    width: fit-content;
+    color: var(--neutral-dark);
+    padding: 1rem 2rem;
+}
 
 
 .auth-link {
 	font-weight: bold;
     color: var(--highlight-color);
+    margin-top: 1rem;
 }
 
 .auth-error {
 	background-color: var(--accent-color);
 	color: var(--neutral-dark);
 	padding: 0.5rem;
+    margin-top: 1rem;
 }
 
 .auth-success {
 	background-color: var(--button-primary-bg);
 	color: var(--neutral-light);
 	padding: 0.5rem;
+    margin-top: 1rem;
 }
+
+.success-message { 
+    background-color: var(--button-primary-bg); 
+    color: var(--neutral-light);
+    padding:1rem;
+    margin: 1rem 0;
+}
+
 
 /* Buttons */
 button, .button {
@@ -499,20 +647,23 @@ button, .button {
     width:100%;
     min-width: 160px;
     padding: var(--padding-small) var(--padding-medium);
-    border: none;
+    border: 1px solid;
     border-radius: 4px;
     cursor: pointer;
     font-size: var(--font-size);
     font-weight: var(--font-weight-bold);
+    border-color: var(--button-primary-bg);
+    text-align: center;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button.primary, .button.primary {
     border: 1px solid var(--button-primary-bg);
     color: var(--button-primary-text);
+    margin: 2rem 0;
 }
 
-button.primary:hover, .button.primary:hover {
+button.primary:hover, .button.primary:hover, .button:hover {
     background-color: var(--button-primary-bg);
     transform: scale(0.95);
 }
@@ -526,6 +677,13 @@ button.secondary:hover, .button.secondary:hover {
     background-color: var(--button-secondary-bg);
     transform: scale(0.5);
 }
+
+button.button, .searchinput { 
+    margin: 0;
+    height: 4rem;
+    align-content: center;
+}
+
 
 /* Card and Section Containers */
 .card {
@@ -566,15 +724,31 @@ input:focus, textarea:focus {
 .form-group {
     margin-top: 1.5rem;
     color: var(--neutral-light);
-
 }
 
-
+.form-input, .form-textarea {
+    color: var(--neutral-dark);
+    font-weight: 700;
+}
 
 .skill-form-heading {
     font-size: 2rem;
     color: var(--highlight-color);
     margin-top: 1rem;
+}
+
+.skill-directory-heading {
+    font-size: 2rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-top: 0;
+}
+
+.skill-list-heading {
+    font-size: 2rem;
+    color: var(--neutral-light);
+    font-weight: 600;
+    margin-top: 0;
 }
 
 .skill-form-subheading {
@@ -632,13 +806,16 @@ label, .label {
  #id_new_password1, 
  #id_new_password2, 
  .input-field, 
+ .input-container,
  .form-group input, 
- .input-field
+ .input-field,
+ .options select
  {
     background-color: var(--neutral-light);
     color: var(--neutral-dark); 
     border-radius: 0;
     border-bottom: 3px solid red;
+    font-weight: 600;
 }
 
 
@@ -687,11 +864,32 @@ label, .label {
 
   }
 
+
+/* Background Colours */
+.red-bg {
+    background-color: var(--accent-color);
+}
+.gray-bg {
+    background-color: var(--button-secondary-bg);
+    color: var(--button-primary-bg);
+}
+.blue-bg {
+    background-color: var(--button-primary-bg);
+    color: var(--neutral-light);
+}
+
 /* Fonts */
 .red-text { 
     color: var(--accent-color);
 }
 
+.blue-text {
+    color: var(--button-primary-bg);
+}
+
+.orange-text { 
+    color: var(--highlight-color);
+}
 
 /* Custom focus styles */
 .custom-focus {
@@ -726,7 +924,6 @@ label, .label {
 
 
 
-
 .skills-grid {
     display: grid;
    /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));*/
@@ -735,18 +932,87 @@ label, .label {
     margin-top: 1rem;
 }
 
+.skills-grid-home {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.skills-grid-home div {
+    aspect-ratio: 1;
+    padding: 1rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+
+.skills-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 1rem;
+    min-height: 200px;
+    font-size: 1rem;
+}
+
+.skills-home h2 { 
+    text-align: left; align-self: self-start;}
+
+.skills-home form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%; 
+}
+
+.skills-home input {
+    width: 100%;
+    margin-bottom: 0.5rem; 
+    border: 0;
+    height: 4rem;
+}
+
+.skills-home button {
+    margin-top: auto; 
+    align-self: flex-end; 
+}
+ 
+.skills-grid-home a {
+    color: var(--button-primary-bg);
+}
+
+.skills-home-blue-bg {
+    background-color: var(--button-primary-bg);
+}
+
+.skills-grid-home a:hover{
+    background-color: var(--highlight-color);
+} 
+
+.skills-grid-home a h2 {
+    text-align: left; 
+    align-self: self-start;
+    font-size: 1.5rem;
+    color: var(--neutral-light);
+}
+
 .stat {
     display: flex;
     flex-direction: row;
-    background-color: var(--neutral-light);
     color: var(--neutral-dark);
     font-size: 1rem;
+}
+
+.stat p {
+    min-width: 100px;
 
 }
 
 .stat-result {
     display: flex;
-    justify-content: flex-end;
+    justify-content: start;
     justify-items: center;
     flex-direction: column;
     width: 90%;
@@ -757,7 +1023,7 @@ label, .label {
 
 .stat-result-row {
     display: flex;
-    justify-content:flex-end;
+    justify-content:start;
     flex-direction: row;
     width: 90%;
     margin-left: 1.5rem;
@@ -769,8 +1035,9 @@ label, .label {
     background-color: var(--highlight-color);
     color: var(--neutral-light);
     border-radius: 0.5rem;
-    padding:0.3rem 0.6rem; 
-    margin: 0.2rem ;
+    padding: 0.3rem; 
+    justify-content: center;
+    margin: 0;
 }
 .height-row-stat {
     min-height:2rem;
@@ -782,13 +1049,12 @@ label, .label {
 }
 
 .skill-card, .skill-card-data {
-    background: var(--neutral-light);
+    background: var(--background-color);
     color: var(--neutral-dark);
     padding: 15px;
-    border-radius: 10px;
-    cursor: pointer;
+
     transition: transform 0.2s;
-    border:1px solid red;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .skill-card-data select {
@@ -803,19 +1069,17 @@ label, .label {
     font-size: 1.5rem;
     padding: 0 0 0.5rem 0;
 }
-.skill-card:hover {
-    transform: scale(1.05);
-    background-color: var(--background-color);
-}
 
-.stat:hover {
-
-    background-color: var(--background-color);
-}
 
 .skill-name {
     color: var(--accent-color);
     font-weight: 700;
+}
+
+.skill-directory-name {
+    color: var(--accent-dark);
+    font-weight: 700;
+    font-size: 1rem;
 }
 
 .small { 
@@ -1057,17 +1321,13 @@ background-color: var(--button-secondary-bg);
     cursor: pointer;
 }
 
-.orange-text { 
-    color: var(--highlight-color);
-}
-.red-text {
-    color: var(--accent-color)
-}
+
 
 .search-results {
     background-color: var(--background-color);
     color: var(--neutral-dark);
     padding:1rem;
+    margin-top: 1rem;
 }
 
 

@@ -3,45 +3,75 @@
 
 {% block content %}
 <div class="scrollable-area">
+  <div class="full-form">
+      <h1 class="login-heading">Welcome to your <strong class="red-text">Skills</strong>Bank, {{ user}} </h1>
 
-<div class="container mx-auto mt-10">
-    <h1 class="text-3xl font-bold text-center text-gray-800">HOME Skills Bank</h1>
-    <h2 class="text-center text-gray-600 mt-2">Access a Wealth of Expertise – Search My Skills Bank</h2>
-    <p class="text-center">Quickly find the expertise you need for your project. From technical skills to creative solutions, I’ve made it easy to discover the right abilities for your project.</p>
-
-    <div>
-      Add skill
-      Find skills
-      
-    </div>
-
-    <!-- Input Section -->
-    <div class="mt-8 flex flex-col items-center">
-      <div class="flex gap-2">
-        <input id="skillInput" type="text" placeholder="Enter a skill or activity" 
-          class="w-80 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <button id="addSkillBtn" 
-          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
-          Add +
-        </button>
-   
-      <div class="mt-4">
-        <input id="searchInput" type="text" placeholder="Find skill (e.g., CSS, design)" 
-          class="w-80 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
-      </div>   </div>
-    </div>
-
-    <!-- Skill Lists -->
-    <div class="mt-8 flex justify-around items-start">
-      <div id="skillListContainer" class="w-1/2 bg-white shadow-lg rounded-lg overflow-hidden">
-        <h2 class="text-xl font-bold bg-gray-200 p-4 text-gray-700">Skills List</h2>
-        <div id="skillList" class="divide-y divide-gray-200 skills-list"></div>
+      {% if messages %}
+      <div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
       </div>
-      <div id="skillsFoundContainer" class="w-1/3 bg-white shadow-lg rounded-lg overflow-hidden">
-        <h2 class="text-xl font-bold bg-gray-200 p-4 text-gray-700">Skills Found</h2>
-        <ol id="skillsFoundList" class="list-decimal list-inside p-4 space-y-2"></ol>
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+          <p><strong>Please correct the following errors</strong></p>
+          <ul>
+              {% for field, errors in form.errors.items %}
+              <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+              {% endfor %}
+          </ul>
       </div>
-    </div>
+      {% endif %}
+      <hr>
+
+<div class="skills-grid-home">
+  
+      <!-- Skills list link -->
+      <a href="{% url 'user_skills' %}" class="skills-home blue-bg"><h2><strong>{{user}}</strong> Skills</h2></a>
+
+    <!-- Profile link -->
+    <a href="{% url 'user_profile' username=request.user.username %}" class="skills-home gray-bg"><h2><strong>{{user}}</strong> Profile</h2></a>
+
+       <!-- Quick Add link -->
+  <div class="skills-home red-bg"><h2><strong>Quick Add</strong> Skill</h2>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'add-quick-skill' %}">
+      {% csrf_token %}
+
+      <!-- Custom Skill Input Field -->
+      <label for="id_name" class="home-heading visually-hidden">Skill Name</label>
+      <input type="text" id="id_name" name="name" placeholder="Enter skill" class="input-container custom-focus" />
+
+      <!-- Display errors if any -->
+      {% if form.name.errors %}
+          <ul class="errors text-red-600">
+              {% for error in form.name.errors %}
+                  <li>{{ error }}</li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+
+      <button type="submit" class="w-full button primary">Save Skill</button>
+  </form>
+  </div>
+
+    <!-- Account link -->
+    <a href="{% url 'skill_account' %}" class="skills-home red-bg"><h2><strong>{{user}}</strong> Account</h2></a>
+
+    <!-- Search link -->
+  <div class="skills-home blue-bg"><h2><strong>Search</strong> Skills</h2>
+    <form method="get" action="{% url 'search_users_by_skill' %}">
+        <input id="searchInput" type="text" name="search" placeholder="Find skill"
+            class="px-4 py-2 custom-focus input-container" />
+    <button type="submit" class="button">Search</button>
+  </form>
+  </div>
+
+
+
+
+  </div>
   </div>
   </div>
   

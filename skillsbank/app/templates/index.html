@@ -5,6 +5,7 @@
     <div class="skills-bank-wrapper">
         <div class="logo-large"><span class="red-text font-bold">Skills</span>Bank</div>
         <h2 class="text-center mt-2">Access a Wealth of Expertise</h2>
+            
 
         <!-- Search Form -->
         <form method="get" action="{% url 'search_users_by_skill' %}">
@@ -12,9 +13,9 @@
                 <div class="flex gap-2 relative">
                     <div class="autocomplete-container">
                         <input id="searchInput" type="text" name="search" placeholder="Find skill (e.g., CSS, design)"
-                            class="w-80 px-4 py-2 custom-focus" />
+                            class="w-80 px-4 py-2 custom-focus searchinput" />
                     </div>
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded">Search</button>
+                    <button type="submit" class="button">Search</button>
                 </div>
             </div>
         </form>

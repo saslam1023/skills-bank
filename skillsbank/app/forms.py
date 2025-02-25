@@ -78,3 +78,16 @@ class SkillForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(attrs={"class": "category-options"}),  
         required=False)
 
+
+class SimpleSkillForm(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['name']
+
+
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-input'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-input'}))
+    message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-textarea'}))

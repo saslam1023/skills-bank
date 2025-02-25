@@ -3,34 +3,28 @@
         <div class="logo-xl bold" id="top-logo"><span class="red-text font-bold">Skills</span>Bank</div>
     </a>
 
+
  
         
     <nav>
         <ul class="nav blue-text-nav">
             {% if user.is_authenticated %}
             <li tabindex="1">
+                <strong><a href="{% url 'home' %}" class="workspace-nav">{{user}}</a></strong>
+            </li>            
+            <li tabindex="2">
                 <strong><a href="{% url 'add_skill' %}" class="hub-nav">Add Skill</a></strong>
             </li>
-            <li tabindex="1">
+            <li tabindex="3">
                 <strong><a href="{% url 'user_skills' %}" class="workspace-nav">Skills List</a></strong>
             </li>
-            <li tabindex="1">
-                <strong><a href="{% url 'skills_dashboard' %}" class="workspace-nav">Skills Dashboard (List)</a></strong>
-            </li>
-            <li tabindex="1">
-                <strong><a href="{% url 'user_profile' username=user.username %}" class="workspace-nav">Profile</a></strong>
-            </li>
-            <li tabindex="1">
-                <strong><a href="{% url 'home' %}" class="workspace-nav">Home</a></strong>
-            </li>
-            <li tabindex="2">
-                <strong class="blue-text-nav"><a href="{% url 'index' %}" class="layout-nav">Skills Bank</a></strong>
-            </li>
-
-            <li tabindex="3" >
-                You're logged in as <a href="{% url 'home' %}" class="user" ><strong>{{ user.username }}</strong></a>
-            </li>
             <li tabindex="4">
+                <strong><a href="{% url 'skills_directory' %}" class="workspace-nav"><strong class="red-text">Skills</strong>Directory</a></strong>
+            </li>     
+            <li tabindex="5">
+                <strong class="blue-text-nav"><a href="{% url 'index' %}" class="layout-nav"><strong class="red-text">Skills</strong> Bank</a></strong>
+            </li>
+            <li tabindex="7">
                 <a href="{% url 'logout' %}" class="">Logout</a>
             </li>
             {% else %}

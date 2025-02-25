@@ -4,8 +4,8 @@
 <div class="scrollable-area bg-dark-grey text-white">
 
   <div class="max-w-md w-full skill-form">
-        <h1 class="login-heading">Add Skill</h1>
-        
+        <h1 class="login-heading"><strong class="red-text">Add</strong> Skill</h1>
+
         <!-- Success Messages -->
         {% if messages %}
         <div class=auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
@@ -31,11 +31,11 @@
 <hr>
 
         <!-- Add Skill Form -->
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" id="add-skill-form">
     {% csrf_token %}
           
-            <div class="form-group">
-              <label for="{{ form.name.id_for_label }}" class="skill-form-heading">Skill Name</label>
+            <div class="form-group skill-list">
+              <label for="{{ form.name.id_for_label }}" class="skill-list-heading">Skill Name</label>
               
               {{ form.name }}
               {% if form.name.errors %}
@@ -48,8 +48,8 @@
               <p class="explain">Skills like CSS, HTML, Cooking, Training, Leadership</p>
             </div>
           
-            <div class="form-group">
-              <label for="proficiency" class="block skill-form-heading">Proficiency</label>
+            <div class="form-group skill-list">
+              <label for="proficiency" class="block skill-list-heading">Proficiency</label>
               <div class="proficiency-options">
           
                   <div class="proficiency-item">
@@ -85,8 +85,8 @@
             </div>
             
           
-            <div class="form-group">
-              <label for="experience" class="block skill-form-heading">Experience</label>
+            <div class="form-group skill-list">
+              <label for="experience" class="block skill-list-heading">Experience</label>
               <div class="experience-options">
                 <div class="experience-item">
                   <label data-experience="1" for="experience1">🐣 Limited</label>
@@ -122,8 +122,8 @@
             
             
           
-            <div class="form-group">
-              <label for="enjoyment" class="block skill-form-heading">Enjoyment Level</label>
+            <div class="form-group skill-list">
+              <label for="enjoyment" class="block skill-list-heading">Enjoyment Level</label>
               <div class="enjoyment-options">
                   <div class="enjoyment-item">
                       <label data-enjoyment="1" for="enjoyment1">😣 Dislike</label>
@@ -157,18 +157,18 @@
               </div>
           </div>
           
-          <div class="form-group">
-            <label for="category" class="block skill-form-heading">Category</label>
+          <div class="form-group skill-list">
+            <label for="category" class="block skill-list-heading">Category</label>
           {{ form.category }}  
           </div>
 
-          <div class="form-group">
-            <label for="context" class="block skill-form-heading">Context of Use (optional)</label>
+          <div class="form-group skill-list">
+            <label for="context" class="block skill-list-heading">Context of Use (optional)</label>
           {{ form.context }}  
           </div>
 
-            <div class="form-group">
-              <label for="certification" class="block skill-form-heading">Certifications or Qualifications (optional)</label>
+            <div class="form-group skill-list">
+              <label for="certification" class="block skill-list-heading">Certifications or Qualifications (optional)</label>
               <input type="text" id="certification" name="certification" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="Certification Name, Issuing Organisation, Date Earned"/>
               <p class="explain">Certification Name, Issuing Organisation, Date Earned</p>
             </div>

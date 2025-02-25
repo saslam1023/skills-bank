@@ -1,0 +1,41 @@
+
+  {% extends "base.html" %}
+{% block content %}
+<div class="scrollable-area">
+    <div class="skills-bank-wrapper login-form">
+        
+        <h1 class="h1-inline">
+            <span class="logo-large-inline"><span class="red-text font-bold">Skills</span>Bank</span> Contact
+        </h1>
+        
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="success-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-field">
+                    <label for="{{ form.name.id_for_label }}">Name</label>
+                    {{ form.name }}
+                </div>
+        
+                <div class="form-field">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                </div>
+        
+                <div class="form-field">
+                    <label for="{{ form.message.id_for_label }}">Message</label>
+                    {{ form.message }}
+                </div>
+        
+                <button type="submit" class="button primary">Send Message</button>
+            </form>
+        </div>
+        
+
+    </div>
+</div>
+{% endblock %}
