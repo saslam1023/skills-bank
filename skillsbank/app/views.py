@@ -88,11 +88,15 @@ def contact(request):
             message = form.cleaned_data["message"]
 
             try:
+                from_email = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@skillsbank.slammin-design.co.uk')
+
+                recipient_list = os.getenv('EMAIL_CONTACT', '').split(',')
+
                 send_mail(
                     subject=f"Contact Form Message from {name}",
-                    message=f"From: {name} ({email})\n\n{message}",
-                    from_email=settings.DEFAULT_FROM_EMAIL,  # Use Django settings
-                    recipient_list=[settings.EMAIL_CONTACT],  # Use settings instead of getenv
+                    message=f"From: {name} ({email})\n\nMessage:\n{message}",
+                    from_email=from_email,
+                    recipient_list=recipient_list,
                     fail_silently=False,
                 )
 
@@ -176,17 +180,17 @@ def skills_directory(request):
     for skill in skills:
         skill.proficiency_width = skill.proficiency * 20  
         if skill.proficiency == 1:
-            skill.proficiency_progress_color = 'yellow'
+            skill.proficiency_progress_class = 'progress-yellow'
         elif skill.proficiency == 2:
-            skill.proficiency_progress_color = 'orange'
+            skill.proficiency_progress_class = 'progress-orange'
         elif skill.proficiency == 3:
-            skill.proficiency_progress_color = 'blue'
+            skill.proficiency_progress_class = 'progress-blue'
         elif skill.proficiency == 4:
-            skill.proficiency_progress_color = 'lightgreen'
+            skill.proficiency_progress_class = 'progress-lightgreen'
         elif skill.proficiency == 5:
-            skill.proficiency_progress_color = 'green'
+            skill.proficiency_progress_class = 'progress-green'
         else:
-            skill.proficiency_progress_color = 'grey'
+            skill.proficiency_progress_class = 'progress-grey'
 
     total_skills = len(skills)
     total_categories = len(skills_by_category)
@@ -424,6 +428,7 @@ def delete_skill(request, skill_id):
 
     return render(request, 'delete-skill.html', {'skill': skill})
 
+""" User Profile (Personal) """
 @csrf_exempt
 @login_required
 def user_profile(request, username):

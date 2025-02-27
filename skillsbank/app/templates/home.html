@@ -33,7 +33,7 @@
       <a href="{% url 'user_skills' %}" class="skills-home blue-bg"><h2><strong>{{user}}</strong> Skills</h2></a>
 
     <!-- Profile link -->
-    <a href="{% url 'user_profile' username=request.user.username %}" class="skills-home gray-bg"><h2><strong>{{user}}</strong> Profile</h2></a>
+    <a href="{% url 'user_profile' username=request.user.username %}" class="skills-home purple-bg"><h2><strong>{{user}}</strong> Profile</h2></a>
 
        <!-- Quick Add link -->
   <div class="skills-home red-bg"><h2><strong>Quick Add</strong> Skill</h2>
@@ -58,10 +58,10 @@
   </div>
 
     <!-- Account link -->
-    <a href="{% url 'skill_account' %}" class="skills-home gray-bg"><h2><strong>{{user}}</strong> Account</h2></a>
+    <a href="{% url 'skill_account' %}" class="skills-home green-bg"><h2><strong>{{user}}</strong> Account</h2></a>
 
     <!-- Search link -->
-  <div class="skills-home red-bg"><h2><strong>Search</strong> Skills</h2>
+  <div class="skills-home orange-bg"><h2><strong>Search</strong> Skills</h2>
     <form method="get" action="{% url 'search_users_by_skill' %}">
         <input id="searchInput" type="text" name="search" placeholder="Find skill"
             class="px-4 py-2 custom-focus input-container" />

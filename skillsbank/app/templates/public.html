@@ -7,7 +7,8 @@
       
         
         <!-- User Bio Section -->
-        <div class="bio-section bg-gray-800 p-6 rounded-lg shadow"><div class="bio">
+        <div class="bio-section bg-gray-800 p-6 rounded-lg shadow">
+            <div class="bio">
             <div class="avatar-container">
                 <img src="{{ gravatar_url }}" alt="{{ user.username }}'s Avatar" class="rounded-full">
             </div>
@@ -17,94 +18,81 @@
         </div>
     </div>
     </div>
-<hr>
-      <!-- Skills Overview -->
-<div class="skills-overview mt-6">
-    <h2 class="skill-form-heading">Skills Overview</h2>
-
-    <div class="skills-top-tens">
-        <!-- Top 10 Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">🔝</p>Top 10 Skills</h3>
-            <ol class="ol text-gray-300">
-                {% for skill in top_skills %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Top 10 Recent Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">🆕</p> Top 10 Recent Skills</h3>
-            <ol class="ol text-gray-300 pl-6">
-                {% for skill in recent_skills %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Most Experienced Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">💼</p> Most Experienced Skills</h3>
-            <ol class="ol text-gray-300 pl-6">
-                {% for skill in most_experienced_skills %}
-                    <li>{{ skill.name }} </li>
-                {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Most Enjoyable Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">😍</p> Most Enjoyable Skills</h3>
-            <ol class="ol text-gray-300 pl-6">
-                {% for skill in most_enjoyable_skills %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Most Proficient Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">📈</p> Most Proficient Skills</h3>
-            <ol class="ol text-gray-300 pl-6">
-                {% for skill in most_proficient_skills %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Certified Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">🏆</p> Certified Skills</h3>
-            <ol class="ol text-gray-300 pl-6">
-                {% for skill in certifications %}
-                    <li>{{ skill.certification }}</li>
-                {% empty %}
-                    <li>No certifications listed</li>
-                {% endfor %}
-            </ol>
-        </div>
-
-            <!-- Skill Lists -->
-    <div class="mt-8 flex justify-around items-start">
-        <div id="skillListContainer" class="w-1/2 bg-white shadow-lg rounded-lg overflow-hidden">
-          <h2 class="text-xl font-bold bg-gray-200 p-4 text-gray-700">Skills List</h2>
-          <div id="skillList" class="divide-y divide-gray-200 skills-list"></div>
-        </div>
-        <div id="skillsFoundContainer" class="w-1/3 bg-white shadow-lg rounded-lg overflow-hidden">
-          <h2 class="text-xl font-bold bg-gray-200 p-4 text-gray-700">Skills Found</h2>
-          <ol id="skillsFoundList" class="list-decimal list-inside p-4 space-y-2"></ol>
-        </div>
-      </div>
-    </div>
-</div>
-
-
-        <!-- Call to Action -->
-        <div class="mt-6 text-center">
-        </div>
+    
+    <div class="skill-container">
+    
+        <h2 class="login-heading"><strong class="red-text">Skills</strong> Overview</h2>
+        <hr>
+    <!-- Skills Overview -->
+    <div class="skills-top-tens mt-6">
+        
+    
+            <!-- Top 10 Skills -->
+            <div class="mt-4 top-10">
+                <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">🔝</p>Top 10 Skills</h3>
+                <ol class="ol text-gray-300 top-skills">
+                    {% for skill in top_skills %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+    
+            <!-- Top 10 Recent Skills -->
+            <div class="mt-4 top-10">
+                <h3 class="text-lg font-semibold skill-form-subheading "><p class="emoji center">🆕</p> Top 10 Recent Skills</h3>
+                <ol class="ol text-gray-300 pl-6 top-recent">
+                    {% for skill in recent_skills %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+    
+            <!-- Most Experienced Skills -->
+            <div class="mt-4 top-10">
+                <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">💼</p> Most Experienced Skills</h3>
+                <ol class="ol text-gray-300 pl-6 top-experience">
+                    {% for skill in most_experienced_skills %}
+                        <li>{{ skill.name }} {{ skill.experience_level }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+    
+            <!-- Most Enjoyable Skills -->
+            <div class="mt-4 top-10">
+                <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">😍</p> Most Enjoyable Skills</h3>
+                <ol class="ol text-gray-300 pl-6 top-enjoyment">
+                    {% for skill in most_enjoyable_skills %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+    
+            <!-- Most Proficient Skills -->
+            <div class="mt-4 top-10">
+                <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">📈</p> Most Proficient Skills</h3>
+                <ol class="ol text-gray-300 pl-6 top-proficient">
+                    {% for skill in most_proficient_skills %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+    
+            <!-- Certified Skills -->
+            <div class="mt-4 top-10">
+                <h3 class="text-lg font-semibold skill-form-subheading "><p class="emoji center">🏆</p> Certified Skills</h3>
+                <ol class="ol text-gray-300 pl-6 certified-skills">
+                    {% for skill in certifications %}
+                        <li>{{ skill.certification }}</li>
+                    {% empty %}
+                        <li>No certifications listed</li>
+                    {% endfor %}
+                </ol>
+            </div>
     </div>
     </div>
-
-</div>
-{% endblock %}
+    
+        </div>
+        </div>
+    
+    {% endblock %}
+    
