@@ -1,55 +1,57 @@
-
-  {% extends "base.html" %}
+{% extends "base.html" %}
 {% block content %}
+
 <div class="scrollable-area">
-    <div class="skills-bank-wrapper">
-        <p class="join">
-        Join the community that celebrates skills, not titles.
-        <br>Track, analyse, and grow with SkillsBank.</p>
-        <div class="logo-large"><span class="red-text font-bold">Skills</span>Bank</div>
-        <h2 class="text-center mt-2">Access a Wealth of Expertise</h2>
-            
-
-        <!-- Search Form -->
-        <form method="get" action="{% url 'search_users_by_skill' %}">
-            <div class="mt-8 flex flex-col items-center">
-                <div class="flex gap-2 relative">
-                    <div class="autocomplete-container">
-                        <input id="searchInput" type="text" name="search" placeholder="Find skill (e.g., CSS, design)"
+	<div class="skills-bank-wrapper">
+		<p class="join">
+			<strong>Join the community that celebrates skills, not titles.</strong>
+			<br>Track, analyse, and grow with SkillsBank.
+			</p>
+			<div class="logo-large">
+				<span class="red-text font-bold">Skills</span>Bank
+			</div>
+			<h2 class="text-center mt-2">Access a Wealth of Expertise</h2>
+			<!-- Search Form -->
+			<form method="get" action="{% url 'search_users_by_skill' %}">
+				<div class="mt-8 flex flex-col items-center">
+					<div class="flex gap-2 relative">
+						<div class="autocomplete-container">
+							<input id="searchInput" type="text" name="search" placeholder="Find skill (e.g., CSS, design)"
                             class="w-80 px-4 py-2 custom-focus searchinput" />
-                    </div>
-                    <button type="submit" class="button">Search</button>
-                </div>
-            </div>
-        </form>
-
-        <!-- Results section -->
+						</div>
+						<button type="submit" class="button">Search</button>
+					</div>
+				</div>
+			</form>
+			<!-- Results section -->
         {% if query %}
-        <div class="mt-8">
-            <h2 class="text-xl font-bold">Search Results for <span class='orange-text'>{{ query }}</span></h2>
-            
-            <div class="search-results">
+        
+			<div class="mt-8">
+				<h2 class="text-xl font-bold">Search Results for 
+					<span class='orange-text'>{{ query }}</span>
+				</h2>
+				<div class="search-results">
             {% if results_message %}
-            <p>{{ results_message|safe }}</p>
+            
+					<p>{{ results_message|safe }}</p>
         {% endif %}
-      </div>
-<hr>        
-<div class="search-results">
+				</div>
+				<hr>
+					<div class="search-results">
             {% if users_with_skills %}
-                <ul>
+						<ul>
                     {% for username in users_with_skills %}
-                    
-                        <li class="font-bold">
-                            <a href="{% url 'public_user_profile' username=username %}">{{ username }}</a> 
-                        </li>
+							<li class="font-bold">
+								<a href="{% url 'public_user_profile' username=username %}">{{ username }}</a>
+							</li>
                     {% endfor %}
-                </ul>
+						</ul>
             {% else %}
-                <p>No users found with those skills.</p>
+						<p>No users found with those skills.</p>
             {% endif %}
-        </div>
-        </div>
+					</div>
+				</div>
         {% endif %}
-    </div>
-</div>
+			</div>
+		</div>
 {% endblock %}

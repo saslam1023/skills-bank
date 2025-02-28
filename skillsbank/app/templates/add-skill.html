@@ -1,186 +1,179 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="scrollable-area bg-dark-grey text-white">
-
-  <div class="max-w-md w-full skill-form">
-        <h1 class="login-heading"><strong class="red-text">Add</strong> Skill</h1>
-
-        <!-- Success Messages -->
+	<div class="max-w-md w-full skill-form">
+		<h1 class="login-heading">
+			<strong class="red-text">Add</strong> Skill
+		</h1>
+		<!-- Success Messages -->
         {% if messages %}
-        <div class=auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+        
+		<div class=auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
             {% for message in messages %}
-            <p>{{ message }}</p>
+            
+			<p>{{ message }}</p>
             {% endfor %}
-        </div>
+        
+		</div>
         {% endif %}
         
-        <!-- Form Errors -->
+        
+		<!-- Form Errors -->
         {% if form.errors %}
-        <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
-            <p><strong>Please correct the following errors</strong></p>
-            <ul>
+        
+		<div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+			<p>
+				<strong>Please correct the following errors</strong>
+			</p>
+			<ul>
                 {% for field, errors in form.errors.items %}
-                    <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+                    
+				<li>
+					<strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}
+				</li>
                 {% endfor %}
-            </ul>
-        </div>
+            
+			</ul>
+		</div>
         {% endif %}
         
 
-<hr>
 
-<div class="skill-container">
-        <!-- Add Skill Form -->
-<form method="POST" enctype="multipart/form-data" id="add-skill-form">
+		<hr>
+			<div class="skill-container">
+				<!-- Add Skill Form -->
+				<form method="POST" enctype="multipart/form-data" id="add-skill-form">
     {% csrf_token %}
           
-            <div class="form-group skill-list">
-              <label for="{{ form.name.id_for_label }}" class="skill-list-heading">Skill Name</label>
+            
+					<div class="form-group skill-list">
+						<label for="{{ form.name.id_for_label }}" class="skill-list-heading">Skill Name</label>
               
               {{ form.name }}
               {% if form.name.errors %}
-                <ul class="errors text-red-600">
+                
+						<ul class="errors text-red-600">
                   {% for error in form.name.errors %}
-                    <li>{{ error }}</li>
+                    
+							<li>{{ error }}</li>
                   {% endfor %}
-                </ul>
+                
+						</ul>
               {% endif %}
-              <p class="explain">Skills like CSS, HTML, Cooking, Training, Leadership</p>
-            </div>
-          
-            <div class="form-group skill-list">
-              <label for="proficiency" class="block skill-list-heading">Proficiency</label>
-              <div class="proficiency-options">
-          
-                  <div class="proficiency-item">
-                      <label data-proficiency="2" for="proficiency2">🧑‍🎓 Beginner</label>
-                      <p class="explain">Basic understanding, can follow instructions for simple tasks</p>
-                      <input type="radio" id="proficiency2" name="proficiency" value="2" hidden>
-                  </div>
-            
-                  <div class="proficiency-item">
-                      <label data-proficiency="3" for="proficiency3">🧑‍💻 Intermediate</label>
-                      <p class="explain">Good grasp of skill, can handle most tasks with some guidance</p>
-                      <input type="radio" id="proficiency3" name="proficiency" value="3" hidden>
-                  </div>
-            
-                  <div class="proficiency-item">
-                      <label data-proficiency="4" for="proficiency4">💼 Advanced</label>
-                      <p class="explain">Confident in handling complex tasks independently</p>
-                      <input type="radio" id="proficiency4" name="proficiency" value="4" hidden>
-                  </div>
-            
-                  <div class="proficiency-item">
-                      <label data-proficiency="5" for="proficiency5">🏆 Expert</label>
-                      <p class="explain">Mastery of skill, can teach and mentor others</p>
-                      <input type="radio" id="proficiency5" name="proficiency" value="5" hidden>
-                  </div>
-            
-                  <div class="proficiency-item">
-                      <label data-proficiency="6" for="proficiency6">🌟 Master</label>
-                      <p class="explain">Thought leader, frequently creating new approaches and teaching others at a high level</p>
-                      <input type="radio" id="proficiency6" name="proficiency" value="6" hidden>
-                  </div>
-              </div>
-            </div>
-            
-          
-            <div class="form-group skill-list">
-              <label for="experience" class="block skill-list-heading">Experience</label>
-              <div class="experience-options">
-                <div class="experience-item">
-                  <label data-experience="1" for="experience1">🐣 Limited</label>
-                  <p class="explain">Used occasionally in simple contexts</p>
-                  <input type="radio" id="experience1" name="experience" value="1" hidden>
-                </div>
-            
-                <div class="experience-item">
-                  <label data-experience="2" for="experience2">🛠️ Basic</label>
-                  <p class="explain">Used in a few instances, moderate comfort</p>
-                  <input type="radio" id="experience2" name="experience" value="2" hidden>
-                </div>
-            
-                <div class="experience-item">
-                  <label data-experience="3" for="experience3">🚀 Moderate</label>
-                  <p class="explain">Used regularly with confidence</p>
-                  <input type="radio" id="experience3" name="experience" value="3" hidden>
-                </div>
-            
-                <div class="experience-item">
-                  <label data-experience="4" for="experience4">🌟 Extensive</label>
-                  <p class="explain">Significant experience with complex tasks</p>
-                  <input type="radio" id="experience4" name="experience" value="4" hidden>
-                </div>
-            
-                <div class="experience-item">
-                  <label data-experience="5" for="experience5">🏆 Vast</label>
-                  <p class="explain">Mastered in diverse, challenging scenarios</p>
-                  <input type="radio" id="experience5" name="experience" value="5" hidden>
-                </div>
-              </div>
-            </div>
-            
-            
-          
-            <div class="form-group skill-list">
-              <label for="enjoyment" class="block skill-list-heading">Enjoyment Level</label>
-              <div class="enjoyment-options">
-                  <div class="enjoyment-item">
-                      <label data-enjoyment="1" for="enjoyment1">😣 Dislike</label>
-                      <p class="explain">I don’t enjoy this skill</p>
-                      <input type="radio" id="enjoyment1" name="enjoyment" value="1" hidden>
-                  </div>
-          
-                  <div class="enjoyment-item">
-                      <label data-enjoyment="2" for="enjoyment2">😐 Neutral</label>
-                      <p class="explain">I have this skill</p>
-                      <input type="radio" id="enjoyment2" name="enjoyment" value="2" hidden>
-                  </div>
-          
-                  <div class="enjoyment-item">
-                      <label data-enjoyment="3" for="enjoyment3">🙂 Moderate</label>
-                      <p class="explain">I like this skill</p>
-                      <input type="radio" id="enjoyment3" name="enjoyment" value="3" hidden>
-                  </div>
-          
-                  <div class="enjoyment-item">
-                      <label data-enjoyment="4" for="enjoyment4">😃 Strong</label>
-                      <p class="explain">I enjoy this skill</p>
-                      <input type="radio" id="enjoyment4" name="enjoyment" value="4" hidden>
-                  </div>
-          
-                  <div class="enjoyment-item">
-                      <label data-enjoyment="5" for="enjoyment5">😍 Passionate</label>
-                      <p class="explain">I love this skill</p>
-                      <input type="radio" id="enjoyment5" name="enjoyment" value="5" hidden>
-                  </div>
-              </div>
-          </div>
-          
-          <div class="form-group skill-list">
-            <label for="category" class="block skill-list-heading">Category</label>
+              
+						<p class="explain">Skills like CSS, HTML, Cooking, Training, Leadership</p>
+					</div>
+					<div class="form-group skill-list">
+						<label for="proficiency" class="block skill-list-heading">Proficiency</label>
+						<div class="proficiency-options">
+							<div class="proficiency-item">
+								<label data-proficiency="2" for="proficiency2">🧑‍🎓 Beginner</label>
+								<p class="explain">Basic understanding, can follow instructions for simple tasks</p>
+								<input type="radio" id="proficiency2" name="proficiency" value="2" hidden>
+								</div>
+								<div class="proficiency-item">
+									<label data-proficiency="3" for="proficiency3">🧑‍💻 Intermediate</label>
+									<p class="explain">Good grasp of skill, can handle most tasks with some guidance</p>
+									<input type="radio" id="proficiency3" name="proficiency" value="3" hidden>
+									</div>
+									<div class="proficiency-item">
+										<label data-proficiency="4" for="proficiency4">💼 Advanced</label>
+										<p class="explain">Confident in handling complex tasks independently</p>
+										<input type="radio" id="proficiency4" name="proficiency" value="4" hidden>
+										</div>
+										<div class="proficiency-item">
+											<label data-proficiency="5" for="proficiency5">🏆 Expert</label>
+											<p class="explain">Mastery of skill, can teach and mentor others</p>
+											<input type="radio" id="proficiency5" name="proficiency" value="5" hidden>
+											</div>
+											<div class="proficiency-item">
+												<label data-proficiency="6" for="proficiency6">🌟 Master</label>
+												<p class="explain">Thought leader, frequently creating new approaches and teaching others at a high level</p>
+												<input type="radio" id="proficiency6" name="proficiency" value="6" hidden>
+												</div>
+											</div>
+										</div>
+										<div class="form-group skill-list">
+											<label for="experience" class="block skill-list-heading">Experience</label>
+											<div class="experience-options">
+												<div class="experience-item">
+													<label data-experience="1" for="experience1">🐣 Limited</label>
+													<p class="explain">Used occasionally in simple contexts</p>
+													<input type="radio" id="experience1" name="experience" value="1" hidden>
+													</div>
+													<div class="experience-item">
+														<label data-experience="2" for="experience2">🛠️ Basic</label>
+														<p class="explain">Used in a few instances, moderate comfort</p>
+														<input type="radio" id="experience2" name="experience" value="2" hidden>
+														</div>
+														<div class="experience-item">
+															<label data-experience="3" for="experience3">🚀 Moderate</label>
+															<p class="explain">Used regularly with confidence</p>
+															<input type="radio" id="experience3" name="experience" value="3" hidden>
+															</div>
+															<div class="experience-item">
+																<label data-experience="4" for="experience4">🌟 Extensive</label>
+																<p class="explain">Significant experience with complex tasks</p>
+																<input type="radio" id="experience4" name="experience" value="4" hidden>
+																</div>
+																<div class="experience-item">
+																	<label data-experience="5" for="experience5">🏆 Vast</label>
+																	<p class="explain">Mastered in diverse, challenging scenarios</p>
+																	<input type="radio" id="experience5" name="experience" value="5" hidden>
+																	</div>
+																</div>
+															</div>
+															<div class="form-group skill-list">
+																<label for="enjoyment" class="block skill-list-heading">Enjoyment Level</label>
+																<div class="enjoyment-options">
+																	<div class="enjoyment-item">
+																		<label data-enjoyment="1" for="enjoyment1">😣 Dislike</label>
+																		<p class="explain">I don’t enjoy this skill</p>
+																		<input type="radio" id="enjoyment1" name="enjoyment" value="1" hidden>
+																		</div>
+																		<div class="enjoyment-item">
+																			<label data-enjoyment="2" for="enjoyment2">😐 Neutral</label>
+																			<p class="explain">I have this skill</p>
+																			<input type="radio" id="enjoyment2" name="enjoyment" value="2" hidden>
+																			</div>
+																			<div class="enjoyment-item">
+																				<label data-enjoyment="3" for="enjoyment3">🙂 Moderate</label>
+																				<p class="explain">I like this skill</p>
+																				<input type="radio" id="enjoyment3" name="enjoyment" value="3" hidden>
+																				</div>
+																				<div class="enjoyment-item">
+																					<label data-enjoyment="4" for="enjoyment4">😃 Strong</label>
+																					<p class="explain">I enjoy this skill</p>
+																					<input type="radio" id="enjoyment4" name="enjoyment" value="4" hidden>
+																					</div>
+																					<div class="enjoyment-item">
+																						<label data-enjoyment="5" for="enjoyment5">😍 Passionate</label>
+																						<p class="explain">I love this skill</p>
+																						<input type="radio" id="enjoyment5" name="enjoyment" value="5" hidden>
+																						</div>
+																					</div>
+																				</div>
+																				<div class="form-group skill-list">
+																					<label for="category" class="block skill-list-heading">Category</label>
           {{ form.category }}  
-          </div>
-
-          <div class="form-group skill-list">
-            <label for="context" class="block skill-list-heading">Context of Use (optional)</label>
+          
+																				</div>
+																				<div class="form-group skill-list">
+																					<label for="context" class="block skill-list-heading">Context of Use (optional)</label>
           {{ form.context }}  
-          </div>
-
-            <div class="form-group skill-list">
-              <label for="certification" class="block skill-list-heading">Certifications or Qualifications (optional)</label>
-              <input type="text" id="certification" name="certification" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="Certification Name, Issuing Organisation, Date Earned"/>
-              <p class="explain">Certification Name, Issuing Organisation, Date Earned</p>
-            </div>
           
-          
-          
-          
-            <button type="submit" class="w-full button primary">Save Skill</button>
-          </form>
-        </div>
-    </div>
-  </div>
+																				</div>
+																				<div class="form-group skill-list">
+																					<label for="certification" class="block skill-list-heading">Certifications or Qualifications (optional)</label>
+																					<input type="text" id="certification" name="certification" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" placeholder="Certification Name, Issuing Organisation, Date Earned"/>
+																					<p class="explain">Certification Name, Issuing Organisation, Date Earned</p>
+																				</div>
+																				<button type="submit" class="w-full button primary">Save Skill</button>
+																			</form>
+																		</div>
+																	</div>
+																</div>
 
 {% endblock %}

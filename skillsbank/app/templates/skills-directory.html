@@ -1,50 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="scrollable-area">
-    <div class="full-form">
-            <h1 class="h1-inline">
-                <span class="logo-large-inline"><span class="red-text font-bold">Skills</span>Directory</span>
-            </h1>
-        
+	<div class="full-form">
+		<h1 class="h1-inline">
+			<span class="logo-large-inline">
+				<span class="red-text font-bold">Skills</span>Directory
+			</span>
+		</h1>
         {% if messages %}
-        <div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+		<div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
             {% for message in messages %}
-            <p>{{ message }}</p>
+			<p>{{ message }}</p>
             {% endfor %}
-        </div>
+		</div>
         {% endif %}
-
         {% if form.errors %}
-        <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
-            <p><strong>Please correct the following errors</strong></p>
-            <ul>
+		<div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+			<p>
+				<strong>Please correct the following errors</strong>
+			</p>
+			<ul>
                 {% for field, errors in form.errors.items %}
-                <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+				<li>
+					<strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}
+				</li>
                 {% endfor %}
-            </ul>
-        </div>
+			</ul>
+		</div>
         {% endif %}
-        <hr>
-
-
-        <div class="search-results">The <strong class="red-text">Skills</strong>Bank currently has users with <strong class="red-text">{{ skills_count }} skills</strong> in <strong class="orange-text">{{ categories_count }} categories</strong></div>
-
+		<hr>
+			<div class="search-results">The 
+				<strong class="red-text">Skills</strong>Bank currently has users with 
+				<strong class="red-text">{{ skills_count }} skills</strong> in 
+				<strong class="orange-text">{{ categories_count }} categories</strong>
+			</div>
         {% for category, skills in skills_by_category.items %}
-
-
-        <div class="skill-categories">
-            <h2 class="skill-directory-heading">{{ category }}</h2>
-            
-            <div class="skills-grid">
+			<div class="skill-categories">
+				<h2 class="skill-directory-heading">{{ category }}</h2>
+				<div class="skills-grid">
                 {% for skill in skills %}
-              
-                    <p class="skill-directory-name">{{ skill.name }}</p>
-                  
+					<p class="skill-directory-name">{{ skill.name }}</p>
                 {% endfor %}
-            </div>
-        </div>
+				</div>
+			</div>
         {% endfor %}
-    </div>
-</div>
+		</div>
+	</div>
 {% endblock %}

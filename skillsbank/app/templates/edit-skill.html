@@ -1,71 +1,91 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="scrollable-area">
-    <div class="full-form">
-        <h1 class="skills-list-heading"><strong>Edit Skill <span class="red-text">{{ skill.name }}</span></strong></h1>
+	<div class="full-form">
+		<h1 class="login-heading">
+			<strong>Edit Skill 
+				<span class="red-text">{{ skill.name }}</span>
+			</strong>
+		</h1>
 
         {% if messages %}
-        <div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+        
+		<div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
             {% for message in messages %}
-            <p>{{ message }}</p>
+            
+			<p>{{ message }}</p>
             {% endfor %}
-        </div>
+        
+		</div>
         {% endif %}
 
         {% if form.errors %}
-        <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
-            <p><strong>Please correct the following errors</strong></p>
-            <ul>
+        
+		<div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+			<p>
+				<strong>Please correct the following errors</strong>
+			</p>
+			<ul>
                 {% for field, errors in form.errors.items %}
-                <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+                
+				<li>
+					<strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}
+				</li>
                 {% endfor %}
-            </ul>
-        </div>
+            
+			</ul>
+		</div>
         {% endif %}
-
-        <div class="form-group">
-            <form method="POST">
+<hr>
+        
+<div class="skill-container">
+		<div class="form-group">
+			<form method="POST">
                 {% csrf_token %}
                 
-                <div class="form-field">
-                    <label for="{{ form.name.id_for_label }}" class="block skill-form-heading">Skill Name</label>
-                    {{ form.name }}
-                </div>
                 
-                <div class="form-field options edit">
-                    <label for="{{ form.proficiency.id_for_label }}" class="block skill-form-heading">Proficiency</label>
+				<div class="form-field skill-list">
+					<label for="{{ form.name.id_for_label }}" class="block skill-list-heading">Skill Name</label>
+                    {{ form.name }}
+                
+				</div>
+				<div class="form-field skill-list options edit">
+					<label for="{{ form.proficiency.id_for_label }}" class="block skill-list-heading">Proficiency</label>
                     {{ form.proficiency }}
                 
-                    <label for="{{ form.experience.id_for_label }}" class="block skill-form-heading">Experience</label>
+                    
+					<label for="{{ form.experience.id_for_label }}" class="block skill-list-heading">Experience</label>
                     {{ form.experience }}
                 
-                    <label for="{{ form.enjoyment.id_for_label }}" class="block skill-form-heading">Enjoyment</label>
+                    
+					<label for="{{ form.enjoyment.id_for_label }}" class="block skill-list-heading">Enjoyment</label>
                     {{ form.enjoyment }}
-                </div>
-        
-                <div class="form-field">
-                    <label for="{{ form.category.id_for_label }}" class="block skill-form-heading">Category</label>
+                
+				</div>
+				<div class="form-field skill-list">
+					<label for="{{ form.category.id_for_label }}" class="block skill-list-heading">Category</label>
                     {{ form.category }}
-                </div>
-        
-                <div class="form-field">
-                    <label for="{{ form.context.id_for_label }}" class="block skill-form-heading">Context</label>
+                
+				</div>
+				<div class="form-field skill-list">
+					<label for="{{ form.context.id_for_label }}" class="block skill-list-heading">Context (optional)</label>
                     {{ form.context }}
+                
+				</div>
+                <div class="form-field skill-list">
+                    <label for="{{ form.certification.id_for_label }}" class="block skill-list-heading">Certification</label>
+                    <input type="text" id="{{ form.certification.id_for_label }}" name="{{ form.certification.name }}" value="{{ form.certification.value }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" />
                 </div>
-        
-                <div class="form-field">
-                    <label for="{{ form.certification.id_for_label }}" class="block skill-form-heading">Certification</label>
-                    {{ form.certification }}
-                </div>
-        
-                <div class="options">
-                    <button type="submit" class="button">Update Skill</button>
-                    <a href="{% url 'skill_account' %}" class="button gray-bg">Cancel</a>
-                </div>
-            </form>
+   
+				<div class="update-options">
+					<button type="submit" class="button">Update Skill</button>
+					<a href="{% url 'skill_account' %}" class="button gray-bg update-cancel">Cancel</a>
+				</div>
+			</form>
+		</div>
         </div>
-        
-    </div>
+	</div>
 </div>
 {% endblock %}

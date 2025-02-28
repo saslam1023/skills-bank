@@ -1,87 +1,93 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="scrollable-area">
-    <div class="full-form">
-        <h1 class="login-heading"><strong class="red-text">{{user}}'s</strong> Skills</h1>
-
-
+	<div class="full-form">
+		<h1 class="login-heading">
+			<strong class="red-text">{{user}}'s</strong> Skills
+		</h1>
         {% if messages %}
-        <div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+		<div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
             {% for message in messages %}
-            <p>{{ message }}</p>
+			<p>{{ message }}</p>
             {% endfor %}
-        </div>
+		</div>
         {% endif %}
-
         {% if form.errors %}
-        <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
-            <p><strong>Please correct the following errors</strong></p>
-            <ul>
+		<div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+			<p>
+				<strong>Please correct the following errors</strong>
+			</p>
+			<ul>
                 {% for field, errors in form.errors.items %}
-                <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+				<li>
+					<strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}
+				</li>
                 {% endfor %}
-            </ul>
-        </div>
+			</ul>
+		</div>
         {% endif %}
-        <hr>
-
-
-        <div class="search-results"><strong class="red-text">{{ skills_count }} skills</strong> in <strong class="orange-text">{{ categories_count }} categories</strong></div>
-
-
-        
+		<hr>
+			<div class="search-results">
+				<strong class="red-text">{{ skills_count }} skills</strong> in 
+				<strong class="orange-text">{{ categories_count }} categories</strong>
+			</div>
         {% for category, skills in skills_by_category.items %}
-
-
-        <div class="skill-list">
-            <h2 class="skill-list-heading">{{ category }}</h2>
-            
-            <div class="skills-grid">
-
-                
+			<div class="skill-list">
+				<h2 class="skill-list-heading">{{ category }}</h2>
+				<div class="skills-grid">
                 {% for skill in skills %}
-                <div class="skill-card">
-                    <p>{{ skill.count }}</p>
-        
-                    <ul>
-                    <h2 class="skill-name">{{ skill.name }}</h2>
-                    <div class="skill-stats grid gap-4">
-                        <div class="stat">
-                            <p><strong>Proficiency </strong></p>
-                            <div class="stat-result"> {{ skill.get_proficiency_display }}
-                                <div class="progress-bar">
-                                    <div class="progress-level" style="width: {{ skill.proficiency_width }}%; background-color: {{ skill.proficiency_progress_color }};"></div>
-                                </div>
-                            </div>
-                        </div>
+					<div class="skill-card">
+						<p>{{ skill.count }}</p>
+						<ul>
+							<h2 class="skill-name">{{ skill.name }}</h2>
+							<div class="skill-stats grid gap-4">
+								<div class="stat">
+									<p>
+										<strong>Proficiency </strong>
+									</p>
+									<div class="stat-result"> {{ skill.get_proficiency_display }}
+                                
+										<div class="progress-bar">
+											<div class="progress-level" style="width: {{ skill.proficiency_width }}%; background-color: {{ skill.proficiency_progress_color }};"></div>
+										</div>
+									</div>
+								</div>
+								<div class="stat">
+									<p>
+										<strong>Experience </strong>
+									</p>
+									<div class="stat-result">
+										<p>{{ skill.get_experience_display }}</p>
+										<div class="progress-bar">
+											<div class="progress-level" style="width: {{ skill.progress_width }}%; background-color: {{ skill.progress_color }};"></div>
+										</div>
+									</div>
+								</div>
+								<div class="stat">
+									<p>
+										<strong>Enjoyment </strong>
+									</p>
+									<div class="stat-result">
+										<p>{{ skill.get_enjoyment_display }}</p>
 
-                        <div class="stat">
-                            <p><strong>Experience </strong></p>
-                            <div class="stat-result">
-                                <p>{{ skill.get_experience_display }}</p>
-                                <div class="progress-bar">
-                                    <div class="progress-level" style="width: {{ skill.progress_width }}%; background-color: {{ skill.progress_color }};"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stat">
-                            <p><strong>Enjoyment </strong></p>
-                            <div class="stat-result">
-                                <p>{{ skill.get_enjoyment_display }}</p>
-                                <div class="progress-bar">
-                                    <div class="progress-level" style="width: {{ skill.enjoyment_width }}%; background-color: {{ skill.enjoyment_progress_color }};"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stat height-row-stat">
-                            <p><strong>Context </strong></p>
-                            <div class="stat-result-row">
+                                        <!-- CGPT -->
+										<div class="progress-bar">
+											<div class="progress-level" style="width: {{ skill.enjoyment_width }}%; background-color: {{ skill.enjoyment_progress_color }};"></div>
+										</div>
+                                        <!-- end cgpt -->
+									</div>
+								</div>
+								<div class="stat height-row-stat">
+									<p>
+										<strong>Context </strong>
+									</p>
+									<div class="stat-result-row">
                                 {% if skill.context.all %}
                                     {% for context in skill.context.all %} 
-                                        <span class="tag-style small">
+                                        
+										<span class="tag-style small">
                                             {% if context.name == 'Personal Project' %} 
                                                 Personal Project
                                             {% elif context.name == 'Professional Work' %} 
@@ -98,29 +104,28 @@
                                         </span>
                                     {% endfor %}
                                 {% else %}
-                                    <span class=" small">None listed</span>
+										<span class=" small">None listed</span>
                                 {% endif %}
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="stat">
-                            <p><strong>Certification</strong></p>
-                            <div class="stat-result-row small">
+									</div>
+								</div>
+								<div class="stat">
+									<p>
+										<strong>Certification</strong>
+									</p>
+									<div class="stat-result-row small">
                                     {% if skill.certification %}
-                                        <span class="badge">{{ skill.certification }}</span>
+										<span class="badge">{{ skill.certification }}</span>
                                     {% else %}
-                                        <span>None listed</span>
+										<span>None listed</span>
                                     {% endif %}
-                    
-                            </div>
-                        </div>
-                    </div>
-                </div>
+									</div>
+								</div>
+							</div>
+						</div>
                 {% endfor %}
-            </div>
-        </div>
+					</div>
+				</div>
         {% endfor %}
-    </div>
-</div>
+			</div>
+		</div>
 {% endblock %}

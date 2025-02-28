@@ -5,6 +5,9 @@ from django.contrib.auth import views as auth_views
 from .forms import CustomPasswordResetView, CustomPasswordResetConfirmView, SkillForm
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import handler404
+from app.views import error_404  
+
 
 
 
@@ -37,16 +40,11 @@ urlpatterns = [
 
 
     path('directory/', views.skills_directory, name='skills_directory'), 
-    path('skills/<int:skill_id>/', views.skill_detail, name='skill_detail'),
     path('profile/<str:username>/', views.user_profile, name='user_profile'),
-    path('profile2/<str:username>/', views.update_user_profile, name='update_user_profile'),
     path('<str:username>/', views.public_user_profile, name='public_user_profile'),
-
-
-
-
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
+handler404 = 'app.views.error_404'

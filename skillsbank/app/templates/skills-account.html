@@ -1,50 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="scrollable-area">
-    <div class="full-form">
-        <h1 class="login-heading"><strong>{{user}}'s <span class="red-text">Skills</span></strong>Account</h1>
-
-
+	<div class="full-form">
+		<h1 class="login-heading">
+			<strong>{{user}}'s 
+				<span class="red-text">Skills</span>
+			</strong> Account
+		</h1>
         {% if messages %}
-        <div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+		<div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
             {% for message in messages %}
-            <p>{{ message }}</p>
+			<p>{{ message }}</p>
             {% endfor %}
-        </div>
+		</div>
         {% endif %}
-
         {% if form.errors %}
-        <div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
-            <p><strong>Please correct the following errors</strong></p>
-            <ul>
+		<div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
+			<p>
+				<strong>Please correct the following errors</strong>
+			</p>
+			<ul>
                 {% for field, errors in form.errors.items %}
-                <li><strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}</li>
+				<li>
+					<strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}
+				</li>
                 {% endfor %}
-            </ul>
-        </div>
+			</ul>
+		</div>
         {% endif %}
-        <hr>
-
-
-        <table class="skills-table">
-            <thead>
-                <tr>
-                    <th>Skill Name</th>
-                    <th>Proficiency</th>
-                    <th>Experience</th>
-                    <th>Enjoyment</th>
-                    <th>Category</th>
-                    <th>Context</th>
-                    <th>Certification</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+		<hr>
+			<table class="skills-table">
+				<thead>
+					<tr>
+						<th>Skill Name</th>
+						<th>Proficiency</th>
+						<th>Experience</th>
+						<th>Enjoyment</th>
+						<th>Category</th>
+						<th>Context</th>
+						<th>Certification</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
                 {% for skill in skills %}
-                <tr>
-                    <td><strong class="orange-text">{{ skill.name }}</strong></td>
-                    <td>
+					<tr>
+						<td>
+							<strong class="orange-text">{{ skill.name }}</strong>
+						</td>
+						<td>
                         {% if skill.proficiency == 2 %} Beginner
                         {% elif skill.proficiency == 3 %} Intermediate
                         {% elif skill.proficiency == 4 %} Advanced
@@ -53,7 +59,7 @@
                         {% else %} Not Set
                         {% endif %}
                     </td>
-                    <td>
+						<td>
                         {% if skill.experience == 1 %} Limited
                         {% elif skill.experience == 2 %} Basic
                         {% elif skill.experience == 3 %} Moderate
@@ -62,7 +68,7 @@
                         {% else %} Not Set
                         {% endif %}
                     </td>
-                    <td>
+						<td>
                         {% if skill.enjoyment == 1 %} Dislike
                         {% elif skill.enjoyment == 2 %} Neutral
                         {% elif skill.enjoyment == 3 %} Moderate
@@ -71,40 +77,37 @@
                         {% else %} Not Set
                         {% endif %}
                     </td>
-                    <td>
+						<td>
                         {% for category in skill.category.all %}
                             {{ category.name }}{% if not forloop.last %}, {% endif %}
                         {% empty %}
                             Uncategorised
                         {% endfor %}
                     </td>
-                    <td>
+						<td>
                         {% for context in skill.context.all %}
                             {{ context.name }}{% if not forloop.last %}, {% endif %}
                         {% empty %}
                             None
                         {% endfor %}
                     </td>
-                    <td>
+						<td>
                         {% if skill.certification %}
                             {{ skill.certification }}
                         {% else %}
                             None
                         {% endif %}
                     </td>
-                    <td>
-                        <div class="options">
-                        
-                                    <a href="{% url 'edit_skill' skill.id %}">Edit</a>
-                                    <a href="{% url 'delete_skill' skill.id %}" class="red-bg">Delete</a>
-                            
-                            </div>
-                    </td>
-                </tr>
+						<td>
+							<div class="options">
+								<a href="{% url 'edit_skill' skill.id %}">Edit</a>
+								<a href="{% url 'delete_skill' skill.id %}" class="red-bg">Delete</a>
+							</div>
+						</td>
+					</tr>
                 {% endfor %}
-            </tbody>
-        </table>
-        
-    </div>
-</div>
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}

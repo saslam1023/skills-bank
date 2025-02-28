@@ -2,103 +2,120 @@
 
 {% block content %}
 
-    <div class="scrollable-area">
-        <div class="full-form">    
-        <!-- User Bio Section -->
-        <div class="bio-section bg-gray-800 p-6 rounded-lg shadow"><div class="bio">
-            <div class="avatar-container">
-                <img src="{{ gravatar_url }}" alt="{{ user.username }}'s Avatar" class="rounded-full">
-            </div>
-            <div>
-                
-            <h1 class="login-heading text-2xl font-bold">{{ user.username }}</h1>
-            <h2 class="profile-name">
-                <strong>
-                    <a href="{% url 'public_user_profile' username=user.profile.public_username %}">
-                        {{ user.profile.public_username }}
-            </a>
-        </strong>
-    </h2>
-            <p class="text-lg text-gray-400">{{ user.profile.tagline }}</p>
-            <p class="mt-2 text-gray-300">{{ user.email }}</p>
-        </div>
-    </div>
-    </div>
-
-
-<div class="skill-container">
-
-    <h2 class="login-heading"><strong class="red-text">Skills</strong> Overview</h2>
-    <hr>
-<!-- Skills Overview -->
-<div class="skills-top-tens mt-6">
     
-
-        <!-- Top 10 Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">🔝</p>Top 10 Skills</h3>
-            <ol class="ol text-gray-300 top-skills">
+<div class="scrollable-area">
+	<div class="full-form">
+		<!-- User Bio Section -->
+		<div class="bio-section bg-gray-800 p-6 rounded-lg shadow">
+			<div class="bio">
+				<div class="avatar-container">
+					<img src="{{ gravatar_url }}" alt="{{ user.username }}'s Avatar" class="rounded-full">
+					</div>
+					<div>
+						<h1 class="login-heading text-2xl font-bold">{{ user.username }}</h1>
+						<h2 class="profile-name">
+							<strong>
+								<a href="{% url 'public_user_profile' username=user.profile.public_username %}">
+                        {{ user.profile.public_username }} (Public Profile)
+            </a>
+							</strong>
+						</h2>
+						<p class="text-lg text-gray-400">{{ user.profile.tagline }}</p>
+						<p class="mt-2 text-gray-300">{{ user.email }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="skill-container">
+				<h2 class="login-heading">
+					<strong class="red-text">Skills</strong> Profile (Personal)
+				</h2>
+				<hr>
+					<!-- Skills Overview -->
+					<div class="skills-top-tens mt-6">
+						<!-- Top 10 Skills -->
+						<div class="mt-4 top-10">
+							<h3 class="text-lg font-semibold skill-form-subheading">
+								<p class="emoji center">🔝</p>Top 10 Skills
+							</h3>
+							<ol class="ol text-gray-300 top-skills">
                 {% for skill in top_skills %}
-                    <li>{{ skill.name }}</li>
+                    
+								<li>{{ skill.name }}</li>
                 {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Top 10 Recent Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading "><p class="emoji center">🆕</p> Top 10 Recent Skills</h3>
-            <ol class="ol text-gray-300 pl-6 top-recent">
+            
+							</ol>
+						</div>
+						<!-- Top 10 Recent Skills -->
+						<div class="mt-4 top-10">
+							<h3 class="text-lg font-semibold skill-form-subheading ">
+								<p class="emoji center">🆕</p> Top 10 Recent Skills
+							</h3>
+							<ol class="ol text-gray-300 pl-6 top-recent">
                 {% for skill in recent_skills %}
-                    <li>{{ skill.name }}</li>
+                    
+								<li>{{ skill.name }}</li>
                 {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Most Experienced Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">💼</p> Most Experienced Skills</h3>
-            <ol class="ol text-gray-300 pl-6 top-experience">
+            
+							</ol>
+						</div>
+						<!-- Most Experienced Skills -->
+						<div class="mt-4 top-10">
+							<h3 class="text-lg font-semibold skill-form-subheading">
+								<p class="emoji center">💼</p> Most Experienced Skills
+							</h3>
+							<ol class="ol text-gray-300 pl-6 top-experience">
                 {% for skill in most_experienced_skills %}
-                    <li>{{ skill.name }} {{ skill.experience_level }}</li>
+                    
+								<li>{{ skill.name }} {{ skill.experience_level }}</li>
                 {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Most Enjoyable Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">😍</p> Most Enjoyable Skills</h3>
-            <ol class="ol text-gray-300 pl-6 top-enjoyment">
+            
+							</ol>
+						</div>
+						<!-- Most Enjoyable Skills -->
+						<div class="mt-4 top-10">
+							<h3 class="text-lg font-semibold skill-form-subheading">
+								<p class="emoji center">😍</p> Most Enjoyable Skills
+							</h3>
+							<ol class="ol text-gray-300 pl-6 top-enjoyment">
                 {% for skill in most_enjoyable_skills %}
-                    <li>{{ skill.name }}</li>
+                    
+								<li>{{ skill.name }}</li>
                 {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Most Proficient Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading"><p class="emoji center">📈</p> Most Proficient Skills</h3>
-            <ol class="ol text-gray-300 pl-6 top-proficient">
+            
+							</ol>
+						</div>
+						<!-- Most Proficient Skills -->
+						<div class="mt-4 top-10">
+							<h3 class="text-lg font-semibold skill-form-subheading">
+								<p class="emoji center">📈</p> Most Proficient Skills
+							</h3>
+							<ol class="ol text-gray-300 pl-6 top-proficient">
                 {% for skill in most_proficient_skills %}
-                    <li>{{ skill.name }}</li>
+                    
+								<li>{{ skill.name }}</li>
                 {% endfor %}
-            </ol>
-        </div>
-
-        <!-- Certified Skills -->
-        <div class="mt-4 top-10">
-            <h3 class="text-lg font-semibold skill-form-subheading "><p class="emoji center">🏆</p> Certified Skills</h3>
-            <ol class="ol text-gray-300 pl-6 certified-skills">
+            
+							</ol>
+						</div>
+						<!-- Certified Skills -->
+						<div class="mt-4 top-10">
+							<h3 class="text-lg font-semibold skill-form-subheading ">
+								<p class="emoji center">🏆</p> Certified Skills
+							</h3>
+							<ol class="ol text-gray-300 pl-6 certified-skills">
                 {% for skill in certifications %}
-                    <li>{{ skill.certification }}</li>
+                    
+								<li>{{ skill.certification }}</li>
                 {% empty %}
-                    <li>No certifications listed</li>
+                    
+								<li>No certifications listed</li>
                 {% endfor %}
-            </ol>
-        </div>
-</div>
-</div>
-
-    </div>
-    </div>
+            
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 {% endblock %}
