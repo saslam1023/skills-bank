@@ -8,35 +8,35 @@
 			<strong class="red-text">{{ user}} </strong>
 		</h1>
 
-      {% if messages %}
-      
-		<div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
-          {% for message in messages %}
-          
-			<p>{{ message }}</p>
-          {% endfor %}
-      
-		</div>
-      {% endif %}
+    {% if messages %}
 
-      {% if form.errors %}
-      
+		<div class="auth-success p-4 rounded mb-6" role="alert" aria-live="polite">
+        {% for message in messages %}
+        
+			<p>{{ message }}</p>
+        {% endfor %}
+    
+		</div>
+    {% endif %}
+
+    {% if form.errors %}
+    
 		<div class="p-4 mb-6 auth-error" role="alert" aria-live="assertive">
 			<p>
 				<strong>Please correct the following errors</strong>
 			</p>
 			<ul>
-              {% for field, errors in form.errors.items %}
-              
+            {% for field, errors in form.errors.items %}
+            
 				<li>
 					<strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}
 				</li>
-              {% endfor %}
-          
+            {% endfor %}
+        
 			</ul>
 		</div>
-      {% endif %}
-      
+    {% endif %}
+    
 		<hr>
 			<div class="skil-container">
 				<div class="skills-grid-home">
@@ -58,25 +58,24 @@
 							<strong>Quick Add</strong> Skill
 						</h2>
 						<form method="POST" enctype="multipart/form-data" action="{% url 'add-quick-skill' %}">
-      {% csrf_token %}
+    {% csrf_token %}
 
-      
 							<!-- Custom Skill Input Field -->
 							<label for="id_name" class="home-heading visually-hidden">Skill Name</label>
 							<input type="text" id="id_name" name="name" placeholder="Enter skill" class="input-container custom-focus" />
 							<!-- Display errors if any -->
-      {% if form.name.errors %}
-          
+    {% if form.name.errors %}
+        
 							<ul class="errors text-red-600">
-              {% for error in form.name.errors %}
-                  
+            {% for error in form.name.errors %}
+                
 								<li>{{ error }}</li>
-              {% endfor %}
-          
+            {% endfor %}
+        
 							</ul>
-      {% endif %}
+    {% endif %}
 
-      
+    
 							<button type="submit" class="w-full button ">Save Skill</button>
 						</form>
 					</div>
@@ -101,5 +100,5 @@
 			</div>
 		</div>
 	</div>
-  
-  {% endblock %}
+
+{% endblock %}

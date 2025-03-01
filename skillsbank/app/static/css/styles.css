@@ -179,6 +179,19 @@ footer {
     letter-spacing: 1px;
     background-color: var(--bg-tertiary);
 }
+
+.join button.join-button {
+    margin: 1rem;
+}
+
+button.join-button {
+    width: fit-content;
+    background-color: var(--accent-color);
+    display: block;
+    justify-self: center;
+    margin: 3rem;
+}
+
 /* Navigation */
 nav {
     width: auto;
@@ -283,7 +296,7 @@ ol {
 /* Custom styles for ordered list */
 .ol {
     list-style-type: decimal;
-    padding-left: 3rem;
+    padding-left: 2rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
@@ -308,6 +321,7 @@ ol {
     background-color: var(--bg-tertiary);
     margin: 1rem 0;
     padding-bottom: 2rem;
+    text-transform: capitalize;
 }
 .bio-section {
     background-color: var(--bg-secondary);
@@ -361,11 +375,17 @@ ol {
     gap: 0.5rem;
     justify-content: center;
 }
+
 .options {
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 1rem;
+    justify-content: space-between;
 }
+.edit, .edit select {
+    width:100%;
+}
+
 .delete-options, .update-options {
     display: flex;
     flex-direction: row;
@@ -514,8 +534,23 @@ a.gray-bg:hover {
 .login-heading {
     font-size: 3rem;
     text-transform: capitalize;
+}
+
+.cs50-heading {
+    font-size: 3rem;
+    text-transform: capitalize;
+} 
+
+.cs50 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.cs50 h1 {
+        margin-top: 1rem;
 
 }
+
 .loggedin-heading {
     font-size: 3rem;
     margin:3rem 0 ;
@@ -716,7 +751,7 @@ label, .label {
 }
 .skills-bank-wrapper {
     max-width: 1200px;
-    margin: auto;
+    margin:  4rem auto;
     padding: 20px 20px 10px 20px;
     border-radius: 8px;
     width:fit-content;

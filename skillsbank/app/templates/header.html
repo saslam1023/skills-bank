@@ -5,14 +5,17 @@
 		</div>
 	</a>
 	<nav>
+
 		<ul class="nav blue-text-nav">
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
             
 			<li tabindex="1">
 				<strong>
-					<a href="{% url 'home' %}" class="workspace-nav">{{request.user}}</a>
+					<a href="{% url 'home' %}">{{request.user}}</a>
 				</strong>
 			</li>
+			<li><a href="{% url 'user_profile' username=request.user.username %}">Profile</a></li>
+			<li><a href="{% url 'skill_account' %}">Account</a></li>
 			<li tabindex="2">
 				<a href="{% url 'add_skill' %}" class="hub-nav">Add Skill</a>
 			</li>

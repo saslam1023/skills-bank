@@ -30,6 +30,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('terms-of-use/', views.terms, name='terms'),
+    path('cs50/', views.cs50, name='cs50'),
 
     path('add-skill/', views.add_skill, name='add_skill'),
     path('add-quick-skill/', views.add_quick_skill, name='add-quick-skill'),

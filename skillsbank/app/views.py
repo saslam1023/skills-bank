@@ -60,7 +60,7 @@ def search_users_by_skill(request):
 
         users_with_skills = users_with_skills[:10]
 
-        results_message = f"There are a total of <strong class='orange-text'>{total_results} {query}</strong> in the <strong class='red-text'>Skills</strong>Bank. Here are <span class='orange-text'>{len(users_with_skills)}</span> results."
+        results_message = f"There are a total of <strong class='orange-text'>{total_results} users</strong> with the skill <strong class='red-text'>{query}</strong> in the <strong class='red-text'>Skills</strong>Bank."
 
     else:
         results_message = None
@@ -77,6 +77,11 @@ def search_users_by_skill(request):
             "total_results": total_results,
         },
     )
+
+
+""" Terms (Public)"""
+def cs50(request):
+    return render(request, "cs50.html")
 
 
 """ Terms (Public)"""
@@ -166,10 +171,18 @@ def add_quick_skill(request):
 def skills_directory(request):
     skills = Skill.objects.all()
 
-    skills_by_category = {"Uncategorised": []}
-    skills_by_context = {}
-
+    # Chatgpt: Remove duplicates by skill name
+    seen_skills = set()
+    unique_skills = []
     for skill in skills:
+        if skill.name.lower() not in seen_skills:  
+            # Case-insensitive deduplication
+            seen_skills.add(skill.name.lower())
+            unique_skills.append(skill)
+
+    skills_by_category = {"Uncategorised": []}
+
+    for skill in unique_skills:
         categories = skill.category.all()
         if categories.exists():
             for category in categories:
@@ -178,63 +191,27 @@ def skills_directory(request):
                 skills_by_category[category.name].append(skill)
         else:
             skills_by_category["Uncategorised"].append(skill)
-            if "Uncategorised" not in skills_by_category:
-                skills_by_category["Uncategorised"] = []
-                skills_by_category["Uncategorised"].append(skill)
 
-    for skill in skills:
-        for context in skill.context.all():
-            if context.name not in skills_by_context:
-                skills_by_context[context.name] = []
-            skills_by_context[context.name].append(skill)
-
-    for skill in skills:
-        skill.progress_width = skill.experience * 20
-        if skill.experience == 1:
-            skill.progress_color = "yellow"
-        elif skill.experience == 2:
-            skill.progress_color = "orange"
-        elif skill.experience == 3:
-            skill.progress_color = "blue"
-        elif skill.experience == 4:
-            skill.progress_color = "lightgreen"
-        elif skill.experience == 5:
-            skill.progress_color = "green"
-        else:
-            skill.progress_color = "grey"
-
-    for skill in skills:
-        skill.proficiency_width = skill.proficiency * 20
-        if skill.proficiency == 1:
-            skill.proficiency_progress_class = "progress-yellow"
-        elif skill.proficiency == 2:
-            skill.proficiency_progress_class = "progress-orange"
-        elif skill.proficiency == 3:
-            skill.proficiency_progress_class = "progress-blue"
-        elif skill.proficiency == 4:
-            skill.proficiency_progress_class = "progress-lightgreen"
-        elif skill.proficiency == 5:
-            skill.proficiency_progress_class = "progress-green"
-        else:
-            skill.proficiency_progress_class = "progress-grey"
-
-    total_skills = len(skills)
-    total_categories = len(skills_by_category)
-
-    if not skills_by_category.get("Uncategorised"):
+    if not skills_by_category["Uncategorised"]:
         del skills_by_category["Uncategorised"]
+
+    
+
+    total_skills = len(unique_skills)
+    total_categories = len(skills_by_category)
 
     return render(
         request,
         "skills-directory.html",
         {
             "skills_by_category": skills_by_category,
-            "skills_by_context": skills_by_context,
-            "skills": skills,
+            "skills": unique_skills,
             "skills_count": total_skills,
             "categories_count": total_categories,
         },
     )
+
+
 
 
 """ Authentication (Public)"""
@@ -526,26 +503,26 @@ def user_profile(request, username):
 def public_user_profile(request, username):
     profile = get_object_or_404(Profile, public_username=username)
 
-    user = profile.user
+    profile_user = profile.user
 
-    email = user.email.strip().lower()
+    email = profile_user.email.strip().lower()
     email_hash = hashlib.md5(email.encode("utf-8")).hexdigest()
     gravatar_url = f"https://www.gravatar.com/avatar/{email_hash}?s=200"
 
-    top_skills = Skill.objects.filter(user=user).order_by("-proficiency")[:10]
-    recent_skills = Skill.objects.filter(user=user).order_by("-id")[:10]
-    most_experienced_skills = Skill.objects.filter(user=user).order_by(
+    top_skills = Skill.objects.filter(user=profile_user).order_by("-proficiency")[:10]
+    recent_skills = Skill.objects.filter(user=profile_user).order_by("-id")[:10]
+    most_experienced_skills = Skill.objects.filter(user=profile_user).order_by(
         "-experience"
     )[:5]
-    most_enjoyable_skills = Skill.objects.filter(user=user).order_by(
+    most_enjoyable_skills = Skill.objects.filter(user=profile_user).order_by(
         "-enjoyment"
     )[:5]
-    most_proficient_skills = Skill.objects.filter(user=user).order_by(
+    most_proficient_skills = Skill.objects.filter(user=profile_user).order_by(
         "-proficiency"
     )[:5]
 
     certifications = (
-        Skill.objects.filter(user=user)
+        Skill.objects.filter(user=profile_user)
         .exclude(certification__isnull=True)
         .exclude(certification="")
     )
@@ -554,7 +531,7 @@ def public_user_profile(request, username):
         request,
         "public.html",
         {
-            "user": user,
+            "user": profile_user,
             "gravatar_url": gravatar_url,
             "top_skills": top_skills,
             "recent_skills": recent_skills,

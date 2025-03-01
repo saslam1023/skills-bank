@@ -6,6 +6,7 @@
 		<p class="join">
 			<strong>Join the community that celebrates skills, not titles.</strong>
 			<br>Track, analyse, and grow with SkillsBank.
+			<button type="button" class="button join-button">Join SkillsBank</button>
 			</p>
 			<div class="logo-large">
 				<span class="red-text font-bold">Skills</span>Bank
@@ -30,12 +31,14 @@
 				<h2 class="text-xl font-bold">Search Results for 
 					<span class='orange-text'>{{ query }}</span>
 				</h2>
+				<!-- CGPT -->
 				<div class="search-results">
             {% if results_message %}
             
 					<p>{{ results_message|safe }}</p>
         {% endif %}
 				</div>
+				<!-- end cgpt-->
 				<hr>
 					<div class="search-results">
             {% if users_with_skills %}
