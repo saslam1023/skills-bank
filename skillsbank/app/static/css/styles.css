@@ -445,7 +445,8 @@ ol {
 }
 .skill-categories {
     background-color: var(--bg-light);
-    color: var(--neutral-dark);
+    color: var(--neutral-light);
+    margin: 0;
 }
 .skill-container {
     margin: 1rem 0;
@@ -668,9 +669,10 @@ input:focus, textarea:focus {
 }
 .skill-directory-heading {
     font-size: 2rem;
-    color: var(--accent-color);
+    color: var(--neutral-dark);
     font-weight: 600;
     margin-top: 0;
+    line-height: 2.2rem;
 }
 .skill-list-heading {
     font-size: 2rem;
@@ -822,6 +824,7 @@ label, .label {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin-top: 1rem;
+    max-width: 1200px;
 }
 .skills-grid-home {
     display: grid;
@@ -945,10 +948,17 @@ label, .label {
     font-weight: 700;
 }
 .skill-directory-name {
-    color: var(--accent-dark);
+    color: var(--neutral-light);
     font-weight: 700;
     font-size: 1rem;
+    line-height: 1.1rem;
     text-transform: capitalize;
+    background-color: var(--accent-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    text-align: center;
+    align-self: center;
+    margin: 0;
 }
 .small {
     font-size: 0.8rem;

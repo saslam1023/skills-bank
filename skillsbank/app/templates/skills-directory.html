@@ -36,6 +36,8 @@
 				<strong class="red-text">{{ skills_count }} skills</strong> in 
 				<strong class="orange-text">{{ categories_count }} categories</strong>
 			</div>
+
+			<div class="skills-grid">
         {% for category, skills in skills_by_category.items %}
 			<div class="skill-categories">
 				<h2 class="skill-directory-heading">{{ category }}</h2>
@@ -46,6 +48,7 @@
 				</div>
 			</div>
         {% endfor %}
+		</div>
 		</div>
 	</div>
 {% endblock %}
