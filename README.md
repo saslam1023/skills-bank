@@ -1,10 +1,10 @@
 # **SkillsBank**
 
 #### **Video Demo**
-[Video Demo](skillsbank.slammin-design.co.uk/demo/)
+[Video Demo](https://skillsbank.slammin-design.co.uk/demo/)
 
 #### **Live Demo**
-[Live Demo](skillsbank.slammin-design.co.uk/)
+[Live Demo](https://skillsbank.slammin-design.co.uk/)
 
 ---
 
