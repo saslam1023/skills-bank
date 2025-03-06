@@ -43,6 +43,7 @@ urlpatterns = [
     path('directory/', views.skills_directory, name='skills_directory'), 
     path('profile/<str:username>/', views.user_profile, name='user_profile'),
     path('<str:username>/', views.public_user_profile, name='public_user_profile'),
+    path('demo/', views.demo, name='demo'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

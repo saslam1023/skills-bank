@@ -89,18 +89,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // Search Bar
-document.getElementById('searchInput').addEventListener('input', function() {
-  let query = this.value;
-  fetch(`/search-skills/?search=${query}`)
-    .then(response => response.json())
-    .then(data => {
-      const autocompleteList = document.getElementById('autocompleteList');
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('searchInput');
+  const autocompleteList = document.getElementById('autocompleteList');
+
+  if (!searchInput || !autocompleteList) {
+    return; 
+  }
+
+  searchInput.addEventListener('input', function() {
+    let query = this.value.trim();
+
+    if (query === '') {
       autocompleteList.innerHTML = '';
-      data.suggestions.forEach(function(skill) {
-        const li = document.createElement('li');
-        li.textContent = skill.name;
-        autocompleteList.appendChild(li);
+      autocompleteList.classList.add('hidden');
+      return;
+    }
+
+    // CGPT
+    fetch(`/search-skills/?search=${encodeURIComponent(query)}`)
+      .then(response => response.json())
+      .then(data => {
+        autocompleteList.innerHTML = '';
+
+        if (data.suggestions.length === 0) {
+          autocompleteList.classList.add('hidden');
+          return;
+        }
+
+        data.suggestions.forEach(function(skill) {
+          const li = document.createElement('li');
+          li.textContent = skill.name;
+          autocompleteList.appendChild(li);
+        });
+
+        autocompleteList.classList.remove('hidden');
+      })
+      .catch(error => console.error('Error fetching suggestions:', error));
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const joinButton = document.querySelector(".button.join-button");
+
+  if (joinButton) {
+      joinButton.addEventListener("click", function () {
+          window.location.href = ("register/");
       });
-      autocompleteList.classList.remove('hidden');
-    });
+  }
 });

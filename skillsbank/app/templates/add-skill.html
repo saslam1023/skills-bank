@@ -46,23 +46,23 @@
 				<!-- Add Skill Form -->
 				<form method="POST" enctype="multipart/form-data" id="add-skill-form">
     {% csrf_token %}
-          
+        
             
 					<div class="form-group skill-list">
 						<label for="{{ form.name.id_for_label }}" class="skill-list-heading">Skill Name</label>
-              
-              {{ form.name }}
-              {% if form.name.errors %}
+            
+            {{ form.name }}
+            {% if form.name.errors %}
                 
 						<ul class="errors text-red-600">
-                  {% for error in form.name.errors %}
+    {% for error in form.name.errors %}
                     
 							<li>{{ error }}</li>
-                  {% endfor %}
+                {% endfor %}
                 
 						</ul>
-              {% endif %}
-              
+            {% endif %}
+            
 						<p class="explain">Skills like CSS, HTML, Cooking, Training, Leadership</p>
 					</div>
 					<div class="form-group skill-list">

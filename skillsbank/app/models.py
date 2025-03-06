@@ -22,7 +22,7 @@ class Profile(models.Model):
         word1, word2 = get_random_word(), get_random_word()
         while word1 == word2:
             word2 = get_random_word()
-        month_year = datetime.datetime.now().strftime("%m%y")  # e.g., "0225"
+        month_year = datetime.datetime.now().strftime("%m%y")
         return f"skillac-{word1}-{word2}-{month_year}"
 
     def save(self, *args, **kwargs):
@@ -104,7 +104,7 @@ class Project(models.Model):
     action = models.TextField(help_text="Detail the steps you took to address the task.")
     result = models.TextField(help_text="Describe the outcome of your actions.")
     skills_used = models.ManyToManyField('Skill')
-    key_learnings = models.TextField(blank=True, help_text="Summarize what you learned from this experience.")
+    key_learnings = models.TextField(blank=True, help_text="Summarise what you learned from this experience.")
     feedback = models.TextField(blank=True, help_text="Include any feedback received from peers or mentors.")
     rating = models.PositiveIntegerField(
         choices=[(i, str(i)) for i in range(1, 6)],

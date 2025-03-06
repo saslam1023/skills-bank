@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m%v1c=+-v@254#wvuuo7ek_)-6(a1x9e@84teajr2fp8q1pllr'
+SECRET_KEY = os.getenv('SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['skillsbank.slammin-design.co.uk', 'slammin-design.co.uk', 'www.slammin-design.co.uk', 'localhost']
 
 
 
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
 ]
 
 ROOT_URLCONF = 'skillsbank.urls'
@@ -112,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-gb'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GMT'
 
 USE_I18N = True
 
@@ -124,6 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+"""
 STATIC_URL = 'static/'
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
@@ -131,7 +133,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app', 'static'),
 ]
+"""
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "app/static",
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
@@ -154,7 +168,14 @@ EMAIL_DEFAULT_SENDER_NAME = os.getenv('MAIL_DEFAULT_SENDER_NAME', 'SkillsBank')
 EMAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
 
 if not EMAIL_DEFAULT_SENDER:
-    raise ValueError("EMAIL_DEFAULT_SENDER is not set in the .env file!")
+    raise ValueError("EMAIL_DEFAULT_SENDER is not set in the .env file 1!")
 
 DEFAULT_FROM_EMAIL = f"{EMAIL_DEFAULT_SENDER_NAME} <{EMAIL_DEFAULT_SENDER}>"
+
+
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
+SESSION_COOKIE_AGE = 3600 
 

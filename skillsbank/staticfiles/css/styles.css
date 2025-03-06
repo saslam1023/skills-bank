@@ -174,9 +174,24 @@ footer {
 .join {
     text-align: center;
     font-weight: 100;
-    margin: 1rem 0;
+    margin: 2rem;
+    padding: 1rem;
     letter-spacing: 1px;
+    background-color: var(--bg-tertiary);
 }
+
+.join button.join-button {
+    margin: 1rem;
+}
+
+button.join-button {
+    width: fit-content;
+    background-color: var(--accent-color);
+    display: block;
+    justify-self: center;
+    margin: 3rem;
+}
+
 /* Navigation */
 nav {
     width: auto;
@@ -200,6 +215,7 @@ nav a {
     justify-content: center;
 }
 .nav a {
+    text-transform: capitalize;
     text-decoration: none;
     color: var(--soft-white);
     padding: 0;
@@ -280,7 +296,7 @@ ol {
 /* Custom styles for ordered list */
 .ol {
     list-style-type: decimal;
-    padding-left: 3rem;
+    padding-left: 2rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
@@ -305,6 +321,7 @@ ol {
     background-color: var(--bg-tertiary);
     margin: 1rem 0;
     padding-bottom: 2rem;
+    text-transform: capitalize;
 }
 .bio-section {
     background-color: var(--bg-secondary);
@@ -358,23 +375,29 @@ ol {
     gap: 0.5rem;
     justify-content: center;
 }
+
 .options {
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 1rem;
+    justify-content: space-between;
 }
-.delete-options {
+.edit, .edit select {
+    width:100%;
+}
+
+.delete-options, .update-options {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
     align-items: center;
 }
-.delete-cancel {
+.delete-cancel, .update-cancel {
     height:4rem;
     background-color: transparent;
     align-content: center;
 }
-.delete-cancel:hover {
+.delete-cancel:hover, .update-cancel:hover {
     color: var(--neutral-light);
 }
 .options select {
@@ -422,7 +445,8 @@ ol {
 }
 .skill-categories {
     background-color: var(--bg-light);
-    color: var(--neutral-dark);
+    color: var(--neutral-light);
+    margin: 0;
 }
 .skill-container {
     margin: 1rem 0;
@@ -510,7 +534,24 @@ a.gray-bg:hover {
 }
 .login-heading {
     font-size: 3rem;
+    text-transform: capitalize;
 }
+
+.cs50-heading {
+    font-size: 3rem;
+    text-transform: capitalize;
+} 
+
+.cs50 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.cs50 h1 {
+        margin-top: 1rem;
+
+}
+
 .loggedin-heading {
     font-size: 3rem;
     margin:3rem 0 ;
@@ -519,6 +560,8 @@ a.gray-bg:hover {
     width: fit-content;
     color: var(--neutral-dark);
     padding: 1rem 2rem;
+    text-transform: capitalize;
+
 }
 .auth-link {
     font-weight: bold;
@@ -626,9 +669,10 @@ input:focus, textarea:focus {
 }
 .skill-directory-heading {
     font-size: 2rem;
-    color: var(--accent-color);
+    color: var(--neutral-dark);
     font-weight: 600;
     margin-top: 0;
+    line-height: 2.2rem;
 }
 .skill-list-heading {
     font-size: 2rem;
@@ -709,7 +753,7 @@ label, .label {
 }
 .skills-bank-wrapper {
     max-width: 1200px;
-    margin: auto;
+    margin:  4rem auto;
     padding: 20px 20px 10px 20px;
     border-radius: 8px;
     width:fit-content;
@@ -780,6 +824,7 @@ label, .label {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin-top: 1rem;
+    max-width: 1200px;
 }
 .skills-grid-home {
     display: grid;
@@ -787,6 +832,8 @@ label, .label {
     gap: 1rem;
     margin-top: 1rem;
     width: 800px;
+    text-transform: capitalize;
+
 }
 .skills-grid-home div {
     aspect-ratio: 1;
@@ -901,9 +948,17 @@ label, .label {
     font-weight: 700;
 }
 .skill-directory-name {
-    color: var(--accent-dark);
+    color: var(--neutral-light);
     font-weight: 700;
     font-size: 1rem;
+    line-height: 1.1rem;
+    text-transform: capitalize;
+    background-color: var(--accent-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    text-align: center;
+    align-self: center;
+    margin: 0;
 }
 .small {
     font-size: 0.8rem;
@@ -1098,7 +1153,7 @@ label, .label {
 /* Badge for Certification */
 .badge {
     padding: 5px 10px;
-    background-color: #f39c12;
+    background-color: var(--deep-purple);
     color: white;
     border-radius: 5px;
     font-weight: bold;

@@ -4,22 +4,12 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.decorators.csrf import csrf_exempt
-from .forms import (
-    CustomPasswordResetView,
-    CustomUserCreationForm,
-    SkillForm,
-    SimpleSkillForm,
-    ContactForm,
-)
-from .models import Skill, Category, Profile
-import json
+from .forms import CustomPasswordResetView, CustomUserCreationForm, SkillForm, SimpleSkillForm, ContactForm
+from .models import Skill, Profile
 import hashlib
 from django.core.mail import send_mail
 import os
 from dotenv import load_dotenv
-from django.conf import settings
-
 
 load_dotenv()
 
@@ -79,9 +69,13 @@ def search_users_by_skill(request):
     )
 
 
-""" Terms (Public)"""
+""" CS50 (Public)"""
 def cs50(request):
     return render(request, "cs50.html")
+
+""" Demo (Public)"""
+def demo(request):
+    return render(request, "/demo/index.html")
 
 
 """ Terms (Public)"""
@@ -145,26 +139,6 @@ def contact(request):
         form = ContactForm()
 
     return render(request, "contact.html", {"form": form})
-
-
-"""  Add Skill """
-@login_required
-def add_quick_skill(request):
-    if request.method == "POST":
-        form = SimpleSkillForm(request.POST)
-
-        if form.is_valid():
-            skill = form.save(commit=False)
-            skill.user = request.user
-            skill.save()
-
-            messages.success(request, "Skill added successfully.")
-            return redirect("add-quick-skill")
-    else:
-        form = SimpleSkillForm()
-
-    return render(request, "home.html", {"form": form})
-
 
 
 """ Skills Directory (Public) """
@@ -249,28 +223,47 @@ def register_view(request):
 
 """  Forgot Password (Public)"""
 def forgot_password_view(request):
-    return CustomPasswordResetView.as_view(
-        template_name="forgot_password.html"
-    )(request)
+    view = CustomPasswordResetView.as_view(template_name="forgot_password.html")
+    return view(request)
 
 
 """  Password Reset (Public)"""
 def password_reset_view(request):
-    return CustomPasswordResetView.as_view(
-        template_name="password_reset_request.html"
-    )(request)
+    view = CustomPasswordResetView.as_view(template_name="password_reset_request.html")
+    return view(request)
 
 
 """ Skills """
 # Main Site Content
-""" Skills Table View """
+
+
+"""  Add Quick Skill (Logged in user)"""
+@login_required
+def add_quick_skill(request):
+    if request.method == "POST":
+        form = SimpleSkillForm(request.POST)
+
+        if form.is_valid():
+            skill = form.save(commit=False)
+            skill.user = request.user
+            skill.save()
+
+            messages.success(request, "Skill added successfully.")
+            return redirect("add-quick-skill")
+    else:
+        form = SimpleSkillForm()
+
+    return render(request, "home.html", {"form": form})
+
+
+""" Skills Account View  (Logged in user)"""
 @login_required
 def skill_account(request):
     skills = Skill.objects.filter(user=request.user).order_by("-id")
     return render(request, "skills-account.html", {"skills": skills})
 
 
-""" User Skills """
+""" User Skills  (Logged in user)"""
 @login_required
 def user_skills(request):
     skills = Skill.objects.filter(user=request.user)
@@ -286,7 +279,6 @@ def user_skills(request):
                     skills_by_category[category.name] = []
                 skills_by_category[category.name].append(skill)
         else:
-            # skills_by_category["Uncategorised"].append(skill)
             if "Uncategorised" not in skills_by_category:
                 skills_by_category["Uncategorised"] = []
                 skills_by_category["Uncategorised"].append(skill)
@@ -370,51 +362,37 @@ def user_skills(request):
     )
 
 
-""" Create Skill """
-@login_required
-def create_skill(request):
-    if request.method == "POST":
-        form = SkillForm(request.POST)
-        form.user = request.user  # Pass the logged-in user to the form
-        if form.is_valid():
-            form.save()  # The form's save method will now automatically set the user
-            return redirect("skill_list")  # Redirect to the skill list page
-    else:
-        form = SkillForm()
-
-    return render(request, "create_skill.html", {"form": form})
 
 
-""" Add user skills """
+""" Add user skills  (Logged in user)"""
 @login_required
 def add_skill(request):
     if request.method == "POST":
         form = SkillForm(request.POST)
 
-        print("Raw POST data:", request.POST)  # 🔍 Print what Django receives
+        print("Raw POST data:", request.POST) 
 
         if form.is_valid():
             skill = form.save(
                 commit=False
-            )  # Save skill object without committing yet
+            )  
             skill.user = request.user
-            skill.save()  # First save (now it has an ID)
+            skill.save()  
 
-            # 🔍 Debug: Check what was selected
             context_values = form.cleaned_data.get("context", [])
             category_values = form.cleaned_data.get("category", [])
 
             print(
                 "Context Selected:", context_values
-            )  # Should print selected context objects
+            ) 
             print(
                 "Category Selected:", category_values
-            )  # Should print selected category objects
+            )  
 
             skill.context.set(context_values)
             skill.category.set(category_values)
 
-            skill.save()  # Save again after setting ManyToMany relationships
+            skill.save()  
 
             messages.success(request, "Skill added successfully.")
             return redirect("add_skill")
@@ -425,7 +403,7 @@ def add_skill(request):
     return render(request, "add-skill.html", {"form": form})
 
 
-""" Edit User Skills """
+""" Edit User Skills  (Logged in user)"""
 @login_required
 def edit_skill(request, skill_id):
     skill = get_object_or_404(Skill, id=skill_id)
@@ -441,7 +419,7 @@ def edit_skill(request, skill_id):
     return render(request, "edit-skill.html", {"form": form, "skill": skill})
 
 
-""" Delete User Skills """
+""" Delete User Skills  (Logged in user)"""
 @login_required
 def delete_skill(request, skill_id):
     skill = get_object_or_404(Skill, id=skill_id)
@@ -453,7 +431,7 @@ def delete_skill(request, skill_id):
     return render(request, "delete-skill.html", {"skill": skill})
 
 
-""" User Profile (Personal) """
+""" User Profile  (Logged in user) """
 @login_required
 def user_profile(request, username):
     if request.user.username != username:
@@ -481,6 +459,7 @@ def user_profile(request, username):
         Skill.objects.filter(user=user)
         .exclude(certification__isnull=True)
         .exclude(certification="")
+        .exclude(certification="None")
     )
 
     return render(
@@ -499,7 +478,7 @@ def user_profile(request, username):
     )
 
 
-""" Public User Profile View"""
+""" Public User Profile View (Public)"""
 def public_user_profile(request, username):
     profile = get_object_or_404(Profile, public_username=username)
 
@@ -525,6 +504,7 @@ def public_user_profile(request, username):
         Skill.objects.filter(user=profile_user)
         .exclude(certification__isnull=True)
         .exclude(certification="")
+        .exclude(certification="None")
     )
 
     return render(
@@ -543,7 +523,7 @@ def public_user_profile(request, username):
     )
 
 
-""" Update User Profile """
+""" Update User Profile  (Logged in user)"""
 @login_required
 def update_user_profile(request, username):
 
@@ -592,3 +572,6 @@ def update_user_profile(request, username):
             "form": form,
         },
     )
+
+
+

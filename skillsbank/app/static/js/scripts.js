@@ -128,3 +128,14 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => console.error('Error fetching suggestions:', error));
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const joinButton = document.querySelector(".button.join-button");
+
+  if (joinButton) {
+      joinButton.addEventListener("click", function () {
+          window.location.href = ("register/");
+      });
+  }
+});

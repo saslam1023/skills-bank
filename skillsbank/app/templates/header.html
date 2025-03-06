@@ -7,43 +7,57 @@
 	<nav>
 
 		<ul class="nav blue-text-nav">
-            {% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated %}
             
 			<li tabindex="1">
 				<strong>
 					<a href="{% url 'home' %}">{{request.user}}</a>
 				</strong>
 			</li>
-			<li><a href="{% url 'user_profile' username=request.user.username %}">Profile</a></li>
-			<li><a href="{% url 'skill_account' %}">Account</a></li>
 			<li tabindex="2">
-				<a href="{% url 'add_skill' %}" class="hub-nav">Add Skill</a>
+				<a href="{% url 'user_profile' username=request.user.username %}">Profile</a>
 			</li>
 			<li tabindex="3">
-				<a href="{% url 'user_skills' %}" class="workspace-nav">Skills List</a>
+				<a href="{% url 'skill_account' %}">Account</a>
 			</li>
 			<li tabindex="4">
-				<a href="{% url 'skills_directory' %}" class="workspace-nav">
+				<a href="{% url 'add_skill' %}">Add Skill</a>
+			</li>
+			<li tabindex="5">
+				<a href="{% url 'user_skills' %}" class="workspace-nav">Skills List</a>
+			</li>
+			<li tabindex="6">
+				<a href="{% url 'skills_directory' %}">
 					<strong class="red-text bold">Skills</strong>Directory
 				</a>
 			</li>
-			<li tabindex="5">
-				<a href="{% url 'index' %}" class="layout-nav">
+			<li tabindex="7">
+				<a href="{% url 'index' %}">
 					<strong class="red-text bold">Skills</strong>Bank
 				</a>
 			</li>
-			<li tabindex="7">
-				<a href="{% url 'logout' %}" class="">Logout</a>
+			<li tabindex="8">
+				<a href="{% url 'logout' %}">Logout</a>
 			</li>
-            {% else %}
-            
+
+    {% else %}
 			<li tabindex="1">
-				<a href="{% url 'login' %}" class="">Login</a>
+				<a href="{% url 'skills_directory' %}">
+					<strong class="red-text bold">Skills</strong>Directory
+				</a>
 			</li>
 			<li tabindex="2">
-				<a href="{% url 'register' %}" class="">Register</a>
+				<a href="{% url 'index' %}">
+					<strong class="red-text bold">Skills</strong>Bank
+				</a>
 			</li>
-            {% endif %}
+			<li tabindex="3">
+				<a href="{% url 'login' %}">Login</a>
+			</li>
+			<li tabindex="4">
+				<a href="{% url 'register' %}">Register</a>
+			</li>
+    {% endif %}
         
 		</ul>
 	</nav>

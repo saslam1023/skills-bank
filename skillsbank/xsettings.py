@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-m%v1c=+-v@254#wvuuo7ek_)-6(a1x9e@84teajr2fp8q1pllr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['skillsbank.slammin-design.co.uk', 'slammin-design.co.uk', 'www.slammin-design.co.uk', 'localhost']
 
 
 # Application definition
@@ -113,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-gb'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GMT'
 
 USE_I18N = True
 
@@ -126,7 +126,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+STATICFILES_DIRS = [
+    BASE_DIR / "app/static",
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -141,12 +147,22 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False    
 EMAIL_HOST_USER = os.getenv('MAIL_USERNAME') 
-EMAIL_HOST_PASSWORD = os.getenv('MAIL_PASSWORD')  
+EMAIL_HOST_PASSWORD = os.getenv('MAIL_PASSWORD') 
+EMAIL_CONTACT = os.getenv('EMAIL_CONTACT')
+
 EMAIL_DEFAULT_SENDER_NAME = os.getenv('MAIL_DEFAULT_SENDER_NAME', 'SkillsBank')  
 EMAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
 
 if not EMAIL_DEFAULT_SENDER:
-    raise ValueError("EMAIL_DEFAULT_SENDER is not set in the .env file!")
+    raise ValueError("EMAIL_DEFAULT_SENDER is not set in the .env file 2!")
 
 DEFAULT_FROM_EMAIL = f"{EMAIL_DEFAULT_SENDER_NAME} <{EMAIL_DEFAULT_SENDER}>"
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
+SESSION_COOKIE_AGE = 3600 
+
+CSRF_COOKIE_SECURE = True  
+CSRF_COOKIE_HTTPONLY = True
+CSRF_USE_SESSIONS = False  
