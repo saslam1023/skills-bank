@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-#ALLOWED_HOSTS = ['skillsbank.slammin-design.co.uk', 'slammin-design.co.uk', 'www.slammin-design.co.uk', 'localhost']
+ALLOWED_HOSTS = ['skillsbank.slammin-design.co.uk', 'slammin-design.co.uk', 'www.slammin-design.co.uk', 'localhost']
 
 
 
@@ -179,3 +180,9 @@ SESSION_COOKIE_NAME = 'sessionid'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
 SESSION_COOKIE_AGE = 3600 
 
+
+CSRF_COOKIE_SECURE = True 
+CSRF_COOKIE_HTTPONLY = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://skillsbank.slammin-design.co.uk',
+]
