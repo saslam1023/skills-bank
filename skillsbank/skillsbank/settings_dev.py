@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['skillsbank.slammin-design.co.uk', 'slammin-design.co.uk', 'www.slammin-design.co.uk', 'localhost', '127.0.0.1']
 
@@ -180,7 +180,7 @@ SESSION_COOKIE_NAME = 'sessionid'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
 SESSION_COOKIE_AGE = 3600 
 
-
+""""
 # Security 
 CSRF_COOKIE_SECURE = True 
 CSRF_COOKIE_HTTPONLY = True
@@ -192,4 +192,5 @@ CSRF_TRUSTED_ORIGINS = [
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True"
+"""

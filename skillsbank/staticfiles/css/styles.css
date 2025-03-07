@@ -1209,3 +1209,12 @@ label, .label {
 button {
     margin-left: 10px;
 }
+
+
+@media screen and (max-width: 767px) {
+    /* Styles for mobile phones */
+    body {
+        font-size: 14px;
+        background-color: var(--deep-purple);
+    }
+}

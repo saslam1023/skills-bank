@@ -35,12 +35,12 @@
 			</div>
         {% for category, skills in skills_by_category.items %}
 			<div class="skill-list">
-				<h2 class="skill-list-heading">{{ category }}</h2>
+				<h2 class="skill-list-heading">{{ category }}</h2><p>{{ skill.categories_count }}</p>
 				<div class="skills-grid">
                 {% for skill in skills %}
 					<div class="skill-card">
-						<p>{{ skill.count }}</p>
-						<ul>
+						
+						
 							<h2 class="skill-name">{{ skill.name }}</h2>
 							<div class="skill-stats grid gap-4">
 								<div class="stat">

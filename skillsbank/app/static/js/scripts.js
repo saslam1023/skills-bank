@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-
+// Button in landing page
 document.addEventListener("DOMContentLoaded", function () {
   const joinButton = document.querySelector(".button.join-button");
 
@@ -138,4 +138,9 @@ document.addEventListener("DOMContentLoaded", function () {
           window.location.href = ("register/");
       });
   }
+});
+
+// Menu in mobile view
+document.getElementById("menu-toggle").addEventListener("click", function () {
+  document.getElementById("menu").classList.toggle("hidden");
 });
